@@ -456,7 +456,10 @@ class PokemonDeploymentSolver:
         self.solver.parameters.log_search_progress = False
         status = self.solver.Solve(self.model)
         if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
-            st.success(f"獲得エナジー: {self.solver.Value(self.total_energy)}")
+            if status == cp_model.OPTIMAL:
+                st.success(f"最適解を発見しました。獲得エナジー: {self.solver.Value(self.total_energy)}")
+            elif status == cp_model.FEASIBLE:
+                st.success(f"実行可能解を発見しました。獲得エナジー: {self.solver.Value(self.total_energy)}")
             st.subheader("日ごとの編成")
             for d in range(self.today, self.days):
                 active_pokemon = [
