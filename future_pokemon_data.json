@@ -1,0 +1,492 @@
+{
+    "カメックス lv.30": {
+        "ingredients": {
+            "牛乳": 13.9,
+            "カカオ": 20.8
+        },
+        "berries": 0.803,
+        "type": "water",
+        "level": 30,
+        "base": "カメール"
+    },
+    "ドオー lv.30 AB": {
+        "ingredients": {
+            "カカオ": 8.4,
+            "コーヒー": 16.8
+        },
+        "berries": 0.724,
+        "type": "poison",
+        "level": 30,
+        "base": "パルデアウパー AB"
+    },
+    "ドオー lv.30 AA": {
+        "ingredients": {
+            "カカオ": 29.4
+        },
+        "berries": 0.724,
+        "type": "poison",
+        "level": 30,
+        "base": "ドオー"
+    },
+    "ダグトリオ lv.30": {
+        "ingredients": {
+            "トマト": 9.6,
+            "ネギ": 14.4
+        },
+        "berries": 0.839,
+        "type": "earth",
+        "level": 30,
+        "base": "ディグダ"
+    },
+    "ゴルダック lv.30": {
+        "ingredients": {
+            "カカオ": 3.4,
+            "リンゴ": 13.5
+        },
+        "berries": 0.764,
+        "type": "water",
+        "level": 30,
+        "energy_charge": 3479.235,
+        "base": "コダック"
+    },
+    "オコリザル lv.30": {
+        "ingredients": {
+            "肉": 15.1
+        },
+        "berries": 1.543,
+        "type": "fight",
+        "level": 30,
+        "energy_charge": 1543.56,
+        "base": "マンキー"
+    },
+    "ウツボット lv.30": {
+        "ingredients": {
+            "トマト": 41.2
+        },
+        "berries": 0.821,
+        "type": "grass",
+        "level": 30,
+        "base": "ウツドン"
+    },
+    "レントラー lv.30": {
+        "ingredients": {
+            "トマト": 11.8,
+            "オイル": 23.6
+        },
+        "berries": 0.834,
+        "type": "electric",
+        "level": 30,
+        "base": "コリンク"
+    },
+    "バリヤード lv.30": {
+        "ingredients": {
+            "トマト": 38.2
+        },
+        "berries": 0.728,
+        "type": "esper",
+        "level": 30,
+        "base": "マネネ"
+    },
+    "ユキノオー lv.30": {
+        "ingredients": {
+            "トマト": 41.2
+        },
+        "berries": 0.800,
+        "type": "ice",
+        "level": 30,
+        "base": "ユキカブリ"
+    },
+    "ハクリュー lv.41": {
+        "ingredients": {
+            "ハーブ": 34.1
+        },
+        "berries": 0.991,
+        "type": "dragon",
+        "level": 41,
+        "base": "ミニリュー"
+    },
+    "ゲンガーS lv.30": {
+        "ingredients": {
+            "ハーブ": 19.5
+        },
+        "berries": 1.983,
+        "type": "ghost",
+        "level": 30,
+        "base": "ゴース"
+    },
+    "ハガネール lv.30": {
+        "ingredients": {
+            "トマト": 6.8,
+            "肉": 7.3
+        },
+        "berries": 1.861,
+        "type": "steel",
+        "level": 30,
+        "base": "イワーク"
+    },
+    "トゲキッス lv.30": {
+        "ingredients": {
+            "卵": 12.9
+        },
+        "berries": 0.842,
+        "type": "fairy",
+        "level": 30,
+        "base": "トゲピー"
+    },
+    "チルタリス lv.30": {
+        "ingredients": {
+            "卵": 5.2,
+            "大豆": 15.6
+        },
+        "berries": 1.484,
+        "type": "dragon",
+        "level": 30,
+        "base": "チルット"
+    },
+    "ラウドボーン lv.30": {
+        "ingredients": {
+            "リンゴ": 49.1
+        },
+        "berries": 0.705,
+        "type": "ghost",
+        "level": 30,
+        "base": "アチゲータ"
+    },
+    "フシギバナ lv.30": {
+        "ingredients": {
+            "ミツ": 13.4,
+            "トマト": 26.9
+        },
+        "berries": 0.786,
+        "type": "grass",
+        "level": 30,
+        "base": "フシギバナ"
+    },
+    "バタフリー lv.30": {
+        "ingredients": {
+            "ミツ": 5.6,
+            "トマト": 11.1
+        },
+        "berries": 1.541,
+        "type": "bug",
+        "level": 30,
+        "base": "バタフリー"
+    },
+    "ドクロッグ lv.30 AB": {
+        "ingredients": {
+            "オイル": 9.5,
+            "肉": 23.8
+        },
+        "berries": 0.726,
+        "type": "poison",
+        "level": 30,
+        "base": "グレッグル AB"
+    },
+    "ドクロッグ lv.30 AA": {
+        "ingredients": {
+            "オイル": 33.3
+        },
+        "berries": 0.726,
+        "type": "poison",
+        "level": 30,
+        "base": "グレッグル AA"
+    },
+    "アローラキュウコン lv.30": {
+        "ingredients": {
+            "大豆": 17.0
+        },
+        "berries": 1.695,
+        "type": "ice",
+        "level": 30,
+        "base": "アローラキュウコン"
+    },
+    "バンギラス lv.41": {
+        "ingredients": {
+            "ジンジャー": 33.9
+        },
+        "berries": 0.843,
+        "type": "dark",
+        "level": 41,
+        "base": "ヨーギラス"
+    },
+    "バシャーモ lv.30": {
+        "ingredients": {
+            "キノコ": 4.2,
+            "大豆": 16.6
+        },
+        "berries": 1.759,
+        "type": "fight",
+        "level": 30,
+        "base": "アチャモ"
+    },
+    "ラグラージ lv.30": {
+        "ingredients": {
+            "コーン": 11.1
+        },
+        "berries": 1.769,
+        "type": "earth",
+        "level": 30,
+        "base": "ミズゴロウ"
+    },
+    "クチート lv.30": {
+        "ingredients": {
+            "オイル": 31.5
+        },
+        "berries": 0.821,
+        "type": "steel",
+        "level": 30,
+        "base": "クチート"
+    },
+    "アーボック lv.30": {
+        "ingredients": {
+            "肉": 5.5,
+            "卵": 11.0
+        },
+        "berries": 1.385,
+        "type": "poison",
+        "level": 30,
+        "base": "アーボック"
+    },
+    "キュウコン lv.30": {
+        "ingredients": {
+            "大豆": 13.4
+        },
+        "berries": 1.736,
+        "type": "fire",
+        "level": 30,
+        "base": "ロコン"
+    },
+    "ドードリオ lv.30": {
+        "ingredients": {
+            "大豆": 5.7,
+            "カカオ": 5.7
+        },
+        "berries": 1.703,
+        "type": "bird",
+        "level": 30,
+        "base": "ドードー"
+    },
+    "ガラガラ lv.30": {
+        "ingredients": {
+            "ジンジャー": 13.6
+        },
+        "berries": 1.927,
+        "type": "earth",
+        "level": 30,
+        "base": "カラカラ"
+    },
+    "ホリデーイーブイ lv.30": {
+        "ingredients": {
+            "牛乳": 3.6,
+            "カカオ": 3.6
+        },
+        "berries": 1.524,
+        "type": "normal",
+        "level": 30,
+        "base": "ホリデーイーブイ"
+    },
+    "メガニウム lv.30": {
+        "ingredients": {
+            "カカオ": 4.4,
+            "ミツ": 13.3
+        },
+        "berries": 1.768,
+        "type": "grass",
+        "level": 30,
+        "energy_charge": 2139.67,
+        "base": "ベイリーフ"
+    },
+    "バクフーン lv.30": {
+        "ingredients": {
+            "ジンジャー": 18.4
+        },
+        "berries": 1.782,
+        "type": "fire",
+        "level": 30,
+        "energy_charge": 2924.64,
+        "base": "ヒノアラシ"
+    },
+    "オーダイル lv.30": {
+        "ingredients": {
+            "肉": 19.5
+        },
+        "berries": 1.645,
+        "type": "water",
+        "level": 30,
+        "energy_charge": 2561.715,
+        "base": "ワニノコ"
+    },
+    "ピクシー lv.30": {
+        "ingredients": {
+            "リンゴ": 12.7
+        },
+        "berries": 1.545,
+        "type": "fairy",
+        "level": 30,
+        "base": "ピィ"
+    },
+    "ヘルガー lv.30": {
+        "ingredients": {
+            "ハーブ": 4.3,
+            "ジンジャー": 13.0
+        },
+        "berries": 1.498,
+        "type": "dark",
+        "level": 30,
+        "energy_charge": 2088.46,
+        "base": "デルビル"
+    },
+    "ケッキング lv.30": {
+        "ingredients": {
+            "トマト": 6.7,
+            "ミツ": 13.3
+        },
+        "berries": 1.029,
+        "type": "normal",
+        "level": 30,
+        "base": "ナマケロ"
+    },
+    "トドゼルガ lv.33": {
+        "ingredients": {
+            "オイル": 5.3,
+            "肉": 15.8
+        },
+        "berries": 1.657,
+        "type": "ice",
+        "level": 33,
+        "base": "タマザラシ"
+    },
+    "ヌオー lv.30": {
+        "ingredients": {
+            "キノコ": 27.7
+        },
+        "berries": 0.739,
+        "type": "water",
+        "level": 30,
+        "heal_self": 0.84375,
+        "base": "ヌオー"
+    },
+    "ムシャーナ lv.30": {
+        "ingredients": {
+            "牛乳": 14.2
+        },
+        "berries": 1.508,
+        "type": "esper",
+        "level": 30,
+        "base": "ムシャーナ"
+    },
+    "ムシャーナS lv.30": {
+        "ingredients": {
+            "牛乳": 4.7,
+            "ミツ": 9.5
+        },
+        "berries": 2.262,
+        "type": "esper",
+        "level": 30,
+        "base": "ムンナS"
+    },
+    "クワガノン lv.30": {
+        "ingredients": {
+            "コーヒー": 9.8,
+            "キノコ": 19.5
+        },
+        "berries": 0.691,
+        "type": "bug",
+        "level": 30
+    },
+    "エルレイド lv.30": {
+        "ingredients": {
+            "リンゴ": 4.3,
+            "コーン": 4.3
+        },
+        "berries": 1.919,
+        "type": "esper",
+        "level": 30,
+        "base": "エルレイド"
+    },
+    "クレセリア lv.30": {
+        "ingredients": {
+            "ジンジャー": 7.3,
+            "カカオ": 14.7
+        },
+        "berries": 0.860,
+        "type": "esper",
+        "level": 30,
+        "heal_all": 0.395,
+        "base": "クレセリア"
+    },
+    "ヘラクロス lv.30": {
+        "ingredients": {
+            "ミツ": 14.6
+        },
+        "berries": 0.878,
+        "type": "bug",
+        "level": 30,
+        "base": "ヘラクロス"
+    },
+    "メタモンAA lv.30": {
+        "ingredients": {
+            "オイル": 28.4
+        },
+        "berries": 0.639,
+        "type": "normal",
+        "level": 30,
+        "base": "メタモン"
+    },
+    "メタモンAB lv.30": {
+        "ingredients": {
+            "オイル": 8.1,
+            "ネギ": 12.2
+        },
+        "berries": 0.639,
+        "type": "normal",
+        "level": 30,
+        "base": "メタモン"
+    },
+    "ハピナス lv.30": {
+        "ingredients": {
+            "卵": 38.0
+        },
+        "berries": 0.688,
+        "type": "normal",
+        "level": 30,
+        "base": "ピンプク"
+    },
+    "ドンカラス lv.30": {
+        "ingredients": {
+            "コーヒー": 9.5
+        },
+        "berries": 0.830,
+        "type": "dark",
+        "level": 30,
+        "base": "ヤミカラス"
+    },
+    "ジュカイン lv.30": {
+        "ingredients": {
+            "卵": 6.2
+        },
+        "berries": 1.164,
+        "type": "grass",
+        "level": 30,
+        "berry_burst": 48.96,
+        "base": "ジュカイン"
+    },
+    "カモネギ lv.30": {
+        "ingredients": {
+            "ネギ": 14.2
+        },
+        "berries": 0.672,
+        "type": "bird",
+        "level": 30,
+        "base": "カモネギ"
+    },
+    "キュワワー lv.30": {
+        "ingredients": {
+            "コーン": 17.8
+        },
+        "berries": 0.866,
+        "type": "fairy",
+        "level": 30,
+        "base": "キュワワー"
+    }
+}

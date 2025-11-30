@@ -1,0 +1,327 @@
+{
+    "リザードン": {
+        "ingredients": {
+            "肉": 13.2,
+            "ジンジャー": 26.4
+        },
+        "berries": 1.746,
+        "type": "fire",
+        "level": 30
+    },
+    "カメックス": {
+        "ingredients": {
+            "牛乳": 26.2
+        },
+        "berries": 0.803,
+        "type": "water",
+        "level": 27
+    },
+    "マスカーニャ": {
+        "ingredients": {
+            "イモ": 10.3,
+            "牛乳": 31.0
+        },
+        "berries": 0.966,
+        "type": "dark",
+        "level": 40
+    },
+    "ドオー": {
+        "ingredients": {
+            "カカオ": 15.8
+        },
+        "berries": 0.724,
+        "type": "poison",
+        "level": 25,
+        "heal_self": 1.41075
+    },
+    "ウツボット": {
+        "ingredients": {
+            "トマト": 22.2
+        },
+        "berries": 0.821,
+        "type": "grass",
+        "level": 20,
+        "heal_self": 1.237
+    },
+    "ゲンガー": {
+        "ingredients": {
+            "ハーブ": 10.3,
+            "キノコ": 20.7
+        },
+        "berries": 0.992,
+        "type": "ghost",
+        "level": 30
+    },
+    "カイロス": {
+        "ingredients": {
+            "ミツ": 12.7,
+            "リンゴ": 31.8
+        },
+        "berries": 0.784,
+        "type": "bug",
+        "level": 30,
+        "energy_charge": 688.0
+    },
+    "ラッタ": {
+        "ingredients": {
+            "リンゴ": 5.7,
+            "大豆": 11.4
+        },
+        "berries": 1.448,
+        "type": "normal",
+        "level": 30,
+        "heal_self": 0.91125
+    },
+    "ライチュウ": {
+        "ingredients": {
+            "リンゴ": 7.2,
+            "ジンジャー": 14.4
+        },
+        "berries": 1.764,
+        "type": "electric",
+        "level": 43,
+        "energy_charge": 1515.05
+    },
+    "アチゲータ": {
+        "ingredients": {
+            "リンゴ": 21.2
+        },
+        "berries": 0.656,
+        "type": "fire",
+        "level": 20,
+        "heal_self": 1.4445
+    },
+    "フシギバナ": {
+        "ingredients": {
+            "ミツ": 25.3
+        },
+        "berries": 0.786,
+        "type": "grass",
+        "level": 27
+    },
+    "バタフリー": {
+        "ingredients": {
+            "ミツ": 10.1
+        },
+        "berries": 1.541,
+        "type": "bug",
+        "level": 11
+    },
+    "ジュペッタ": {
+        "ingredients": {
+            "オイル": 4.9,
+            "ジンジャー": 9.7
+        },
+        "berries": 1.642,
+        "type": "ghost",
+        "level": 30,
+        "energy_charge": 1202.435
+    },
+    "アローラキュウコン": {
+        "ingredients": {
+            "大豆": 10.6
+        },
+        "berries": 1.695,
+        "type": "ice",
+        "level": 7
+    },
+    "ウェーニバル": {
+        "ingredients": {
+            "大豆": 12.6,
+            "ネギ": 12.6
+        },
+        "berries": 0.797,
+        "type": "fight",
+        "level": 43,
+        "energy_charge": 2122.98
+    },
+    "クチート": {
+        "ingredients": {
+            "オイル": 16.9
+        },
+        "berries": 0.821,
+        "type": "steel",
+        "level": 20
+    },
+    "アーボック": {
+        "ingredients": {
+            "肉": 10.3
+        },
+        "berries": 1.385,
+        "type": "poison",
+        "level": 17,
+        "heal_self": 1.50525
+    },
+    "ホリデーイーブイ": {
+        "ingredients": {
+            "牛乳": 6.7
+        },
+        "berries": 1.524,
+        "type": "normal",
+        "level": 18
+    },
+    "ベイリーフ": {
+        "ingredients": {
+            "カカオ": 6.8
+        },
+        "berries": 1.513,
+        "type": "grass",
+        "level": 13,
+        "energy_charge": 1087.83
+    },
+    "ヤルキモノ": {
+        "ingredients": {
+            "トマト": 8.5
+        },
+        "berries": 1.393,
+        "type": "normal",
+        "level": 21
+    },
+    "ヌオー": {
+        "ingredients": {
+            "キノコ": 14.9
+        },
+        "berries": 0.739,
+        "type": "water",
+        "level": 25,
+        "heal_self": 0.84375
+    },
+    "ムシャーナ": {
+        "ingredients": {
+            "牛乳": 8.9
+        },
+        "berries": 1.508,
+        "type": "esper",
+        "level": 16
+    },
+    "エルレイド": {
+        "ingredients": {
+            "リンゴ": 8.2
+        },
+        "berries": 1.919,
+        "type": "esper",
+        "level": 15
+    },
+    "クレセリア": {
+        "ingredients": {
+            "ジンジャー": 13.8
+        },
+        "berries": 0.860,
+        "type": "esper",
+        "level": 23,
+        "heal_all": 0.395
+    },
+    "ヘラクロス": {
+        "ingredients": {
+            "ミツ": 9.1
+        },
+        "berries": 0.878,
+        "type": "bug",
+        "level": 19
+    },
+    "パーモット": {
+        "ingredients": {
+            "カカオ": 12.5
+        },
+        "berries": 0.895,
+        "type": "electric",
+        "level": 30,
+        "heal_all": 1.785
+    },
+    "ルカリオ": {
+        "ingredients": {
+            "オイル": 7.7
+        },
+        "berries": 0.882,
+        "type": "fight",
+        "level": 14
+    },
+    "ソーナンス": {
+        "ingredients": {
+            "リンゴ": 8.0
+        },
+        "berries": 0.586,
+        "type": "esper",
+        "level": 11
+    },
+    "メタモン": {
+        "ingredients": {
+            "オイル": 15.3
+        },
+        "berries": 0.639,
+        "type": "normal",
+        "level": 22
+    },
+    "ブラッキー": {
+        "ingredients": {
+            "牛乳": 9.1
+        },
+        "berries": 0.757,
+        "type": "dark",
+        "level": 15,
+        "heal_self": 2.8,
+        "heal_yell": 0.63
+    },
+    "ウッウ": {
+        "ingredients": {
+            "オイル": 8.6,
+            "イモ": 17.3
+        },
+        "berries": 0.742,
+        "type": "bird",
+        "level": 30
+    },
+    "ダークライ": {
+        "ingredients": {
+            "肉": 17.6
+        },
+        "berries": 1.728,
+        "type": "dark",
+        "level": 22,
+        "energy_charge": 2772.0,
+        "heal_all": -18.6
+    },
+    "ウソッキー": {
+        "ingredients": {
+            "トマト": 7.2
+        },
+        "berries": 0.587,
+        "type": "rock",
+        "level": 36,
+        "energy_charge": 5695.37
+    },
+    "イワーク": {
+        "ingredients": {
+            "トマト": 5.7
+        },
+        "berries": 1.680,
+        "type": "rock",
+        "level": 21
+    },
+    "ジュカイン": {
+        "ingredients": {
+            "卵": 6.2
+        },
+        "berries": 1.164,
+        "type": "grass",
+        "level": 27,
+        "berry_burst": 48.96
+    },
+    "カモネギ": {
+        "ingredients": {
+            "ネギ": 14.2
+        },
+        "berries": 0.672,
+        "type": "bird",
+        "level": 22
+    },
+    "キュワワー": {
+        "ingredients": {
+            "コーン": 17.8
+        },
+        "berries": 0.866,
+        "type": "fairy",
+        "level": 21,
+        "heal_yell": 0.99
+    }
+}
