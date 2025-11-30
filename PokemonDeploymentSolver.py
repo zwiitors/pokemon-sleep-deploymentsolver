@@ -13,7 +13,7 @@ class PokemonDeploymentSolver:
         self.solver = cp_model.CpSolver()
 
         # 定数の定義
-        self.days = 7
+        self.days = user_inputs["days"]
         self.num_hours = 24 * self.days  # 7日間 (24h * 7)
         self.day_switch_time = 9
         self.bedin_time = 24
@@ -526,7 +526,9 @@ with st.sidebar:
     st.header("設定")
     day_mapping = {"月":0, "火":1, "水":2, "木":3, "金":4, "土":5, "日":6}
     selected_day = st.selectbox("現在の曜日", list(day_mapping.keys()))
+    max_day = st.selectbox("計算する期間", list(map(lambda x: x+"曜日まで", day_mapping.keys())))
     today_int = day_mapping[selected_day]
+    days_int = day_mapping[max_day[0]]+1
     berries_liked = [0,0,0]
     berries = {
             "ほのお": "fire",
@@ -553,7 +555,7 @@ with st.sidebar:
     berries_liked = [berries[k] for k in berries_liked]
 
     dish_type = st.selectbox("料理タイプ", ["カレー", "サラダ", "デザート"])
-    
+
     st.subheader("食材在庫")
     input_stock = {}
     # 現在の在庫リストにある食材を入力欄として表示
@@ -586,6 +588,7 @@ with st.sidebar:
 if st.button("計算開始"):
     user_inputs = {
         "today": today_int,
+        "days": days_int,
         "stock": input_stock,
         "dish": dish_type,
         "berries": berries_liked
