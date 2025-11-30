@@ -388,7 +388,7 @@ class PokemonDeploymentSolver:
 
         for ingredient in self.ingredients:
             self.model.Add(
-                self.food_inventory[ingredient][self.num_hours]
+                self.food_inventory[ingredient][self.num_hours-1]
                 >= self.final_stock.get(ingredient, 0) * 100
             )
 
