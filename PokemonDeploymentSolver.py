@@ -369,11 +369,9 @@ class PokemonDeploymentSolver:
                         * self.dishes[dish]["ingredients"].get(ingredient, 0)
                         * 100
                         for dish in self.dishes
-                    )
-                    consumed_amount += (
-                        self.ingredients_additionals[(ingredient, t)] * 100
-                    )
-                    self.consumed_ingredients[t] += consumed_amount
+                    )+ self.ingredients_additionals[(ingredient, t)] * 100
+                    self.consumed_ingredients[t] = consumed_amount
+
                 # 食材の在庫更新
                 self.food_inventory[ingredient][t] = (
                     previous_inventory + sum(collected) - consumed_amount
