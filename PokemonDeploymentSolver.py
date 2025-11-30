@@ -453,7 +453,7 @@ class PokemonDeploymentSolver:
 
     def solve(self):
         self.add_constraints()
-        self.solver.parameters.num_workers = 8  # CPUコア数に合わせて調整
+        self.solver.parameters.num_workers = 1  # CPUコア数に合わせて調整
         self.solver.parameters.log_search_progress = False
         status = self.solver.Solve(self.model)
         if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
