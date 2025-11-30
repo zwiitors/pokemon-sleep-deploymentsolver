@@ -22,9 +22,9 @@ class PokemonDeploymentSolver:
         self.start_time += self.today * 24
         self.max_active_pokemon = 5  # 最大同時動員数
         self.dish_week = user_inputs["dish"]
-        self.berry_liked = ["normal","dark","ice"]
+        self.berry_liked = user_inputs["berries"]
         base_cook_time = [9, 15, 20]
-        self.evolution_num = 1
+        self.evolution_num = 0
         self.designated_pokemon = []
         self.forbidden_pokemon = []
         self.pot_capacity = 69  # 料理の最大容量
@@ -527,6 +527,29 @@ with st.sidebar:
     day_mapping = {"月":0, "火":1, "水":2, "木":3, "金":4, "土":5, "日":6}
     selected_day = st.selectbox("現在の曜日", list(day_mapping.keys()))
     today_int = day_mapping[selected_day]
+    berries_liked = [0,0,0]
+    berries = {
+            "ほのお": "fire",
+            "みず": "water",
+            "くさ": "grass",
+            "どく": "poison",
+            "じめん": "earth",
+            "でんき": "electric",
+            "こおり": "ice",
+            "ドラゴン": "dragon",
+            "ゴースト": "ghost",
+            "フェアリー": "fairy",
+            "ひこう": "bird",
+            "ノーマル": "normal",
+            "むし": "bug",
+            "いわ": "rock",
+            "エスパー": "esper",
+            "かくとう": "fight",
+            "あく": "dark",
+            "はがね": "steel",
+        }
+    for i in range(3):
+        berries_liked[i] = berries[st.selectbox("カビゴンの好きなきのみ", list(berries.keys()))]
 
     dish_type = st.selectbox("料理タイプ", ["カレー", "サラダ", "デザート"])
     
@@ -563,7 +586,8 @@ if st.button("計算開始"):
     user_inputs = {
         "today": today_int,
         "stock": input_stock,
-        "dish": dish_type
+        "dish": dish_type,
+        "berries": berries_liked
     }
     
     with st.spinner("計算中...（数秒〜数十秒かかります）"):
