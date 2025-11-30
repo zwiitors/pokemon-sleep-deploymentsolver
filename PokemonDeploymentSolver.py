@@ -549,7 +549,8 @@ with st.sidebar:
             "はがね": "steel",
         }
     for i in range(3):
-        berries_liked[i] = berries[st.selectbox("カビゴンの好きなきのみ", list(berries.keys()))]
+        berries_liked[i] = st.selectbox(f"カビゴンの好きなきのみ{(i+1)}", list(berries.keys()))
+    berries_liked = [berries[k] for k in berries_liked]
 
     dish_type = st.selectbox("料理タイプ", ["カレー", "サラダ", "デザート"])
     
