@@ -112,8 +112,8 @@ class PokemonDeploymentSolver:
         ]
 
         self.ingredients = {
-            "牛乳": 98,
             "リンゴ": 90,
+            "牛乳": 98,
             "肉": 103,
             "ミツ": 101,
             "オイル": 121,
@@ -349,7 +349,7 @@ class PokemonDeploymentSolver:
 
         for ingredient in self.ingredients:
             self.food_inventory[ingredient] = {}
-            for t in range(self.start_time, self.num_hours+1):
+            for t in range(self.start_time, self.num_hours):
                 # 収集量を計算
                 collected = []
                 for p in self.pokemon_data:
