@@ -349,7 +349,7 @@ class PokemonDeploymentSolver:
 
         for ingredient in self.ingredients:
             self.food_inventory[ingredient] = {}
-            for t in range(self.start_time, self.num_hours):
+            for t in range(self.start_time, self.num_hours+1):
                 # 収集量を計算
                 collected = []
                 for p in self.pokemon_data:
@@ -386,10 +386,9 @@ class PokemonDeploymentSolver:
                 # 在庫が負にならない制約を追加
                 self.model.Add(self.food_inventory[ingredient][t] >= 0)
 
-        # 最終的な在庫量が初期在庫と等しい制約を追加
         for ingredient in self.ingredients:
             self.model.Add(
-                self.food_inventory[ingredient][self.num_hours - 1]
+                self.food_inventory[ingredient][self.num_hours]
                 >= self.final_stock.get(ingredient, 0) * 100
             )
 
