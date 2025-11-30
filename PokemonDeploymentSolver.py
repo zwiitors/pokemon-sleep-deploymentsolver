@@ -69,6 +69,7 @@ class PokemonDeploymentSolver:
             pokemon["berries"] *= 36
             for ing_name in pokemon["ingredients"].keys():
                 pokemon["ingredients"][ing_name] /= 24
+                pokemon["ingredients"][ing_name] *= 100
 
         self.berries = {
             "fire": 27,
@@ -265,11 +266,6 @@ class PokemonDeploymentSolver:
                 )
 
         for p in self.pokemon_data:
-            for ingredient in self.ingredients:
-                if ingredient in self.pokemon_data[p]["ingredients"]:
-                    self.pokemon_data[p]["ingredients"][ingredient] = int(
-                        self.pokemon_data[p]["ingredients"][ingredient] * 100
-                    )
             if "energy_charge" in self.pokemon_data[p]:
                 self.pokemon_data[p]["energy_charge"] = int(
                     self.pokemon_data[p]["energy_charge"] * self.skill_energy_multiplier
@@ -386,11 +382,11 @@ class PokemonDeploymentSolver:
                 # 在庫が負にならない制約を追加
                 self.model.Add(self.food_inventory[ingredient][t] >= 0)
 
-        for ingredient in self.ingredients:
-            self.model.Add(
-                self.food_inventory[ingredient][self.num_hours-1]
-                >= self.final_stock.get(ingredient, 0) * 100
-            )
+        #for ingredient in self.ingredients:
+        #    self.model.Add(
+        #        self.food_inventory[ingredient][self.num_hours-1]
+        #        >= self.final_stock.get(ingredient, 0) * 100
+        #    )
 
         for t in self.cook_time:
             # 料理の容量制約
