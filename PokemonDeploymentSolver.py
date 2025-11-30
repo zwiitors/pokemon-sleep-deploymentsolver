@@ -563,7 +563,7 @@ if st.button("計算開始"):
     user_inputs = {
         "today": today_int,
         "stock": input_stock,
-        "dish_type": dish_type
+        "dish": dish_type
     }
     
     with st.spinner("計算中...（数秒〜数十秒かかります）"):
