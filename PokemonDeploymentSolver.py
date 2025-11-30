@@ -292,7 +292,7 @@ class PokemonDeploymentSolver:
             self.pokemon_data[p]["heal_self"] = int(self.pokemon_data[p].get("heal_self", 0) * waking_time)
 
     def add_constraints(self):
-        self.consumed_ingredients = {t: 0 for t in self.cook_time}
+        self.consumed_ingredients = {i: {t: 0 for t in self.cook_time} for i in self.ingredients}
 
         if not self.use_seed_pokemon:
             for p in self.seed_pokemon:
@@ -362,19 +362,17 @@ class PokemonDeploymentSolver:
 
                 # 料理ごとの消費量を変数にする
                 # 各料理について食材の消費量をリニアに表現
-                consumed_amount = 0
                 if t in self.cook_time:
-                    consumed_amount = sum(
+                    self.consumed_ingredients[ingredient][t] = sum(
                         self.cooked_dishes[(dish, t)]
                         * self.dishes[dish]["ingredients"].get(ingredient, 0)
                         * 100
                         for dish in self.dishes
                     )+ self.ingredients_additionals[(ingredient, t)] * 100
-                    self.consumed_ingredients[t] += consumed_amount
 
                 # 食材の在庫更新
                 self.food_inventory[ingredient][t] = (
-                    previous_inventory + sum(collected) - consumed_amount
+                    previous_inventory + sum(collected) - self.consumed_ingredients[ingredient].get(t, 0)
                 )
 
                 # 在庫が負にならない制約を追加
@@ -389,9 +387,9 @@ class PokemonDeploymentSolver:
         for t in self.cook_time:
             # 料理の容量制約
             if t // 24 == 6:
-                self.model.Add(self.consumed_ingredients[t] <= self.pot_capacity * 200)
+                self.model.Add(sum(self.consumed_ingredients[i][t] for i in self.ingredients) <= self.pot_capacity * 200)
             else:
-                self.model.Add(self.consumed_ingredients[t] <= self.pot_capacity * 100)
+                self.model.Add(sum(self.consumed_ingredients[i][t] for i in self.ingredients) <= self.pot_capacity * 100)
 
         # 全食材の合計数を制約
         for t in range(self.start_time, self.num_hours):
@@ -488,7 +486,7 @@ class PokemonDeploymentSolver:
                 ]
                 if cooked_dishes:
                     st.text(
-                        f"日 {t//24} 時間 {t%24}: 作成 {', '.join(cooked_dishes)} (容量 {self.solver.Value(self.consumed_ingredients[t]):.1f})"
+                        f"日 {t//24} 時間 {t%24}: 作成 {', '.join(cooked_dishes)} (容量 {sum(self.solver.Value(self.consumed_ingredients[i][t]) for i in self.ingredients):.1f})"
                     )
                 else:
                     st.text(f"日 {t//24} 時間 {t%24}: 作成なし")
