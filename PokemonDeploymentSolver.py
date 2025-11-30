@@ -68,8 +68,8 @@ class PokemonDeploymentSolver:
         for pokemon in self.pokemon_data.values():
             pokemon["berries"] *= 36
             for ing_name in pokemon["ingredients"].keys():
-                pokemon["ingredients"][ing_name] /= 24
                 pokemon["ingredients"][ing_name] *= 100
+                pokemon["ingredients"][ing_name] /= 24
 
         self.berries = {
             "fire": 27,
