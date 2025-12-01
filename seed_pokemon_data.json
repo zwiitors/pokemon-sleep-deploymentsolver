@@ -270,5 +270,14 @@
         "berries": 0.740,
         "type": "dark",
         "level": 22
+    },
+    "バケッチャ": {
+        "ingredients": {
+            "カボチャ": 12.2
+        },
+        "berries": 1.645,
+        "type": "ghost",
+        "level": 14,
+        "energy_charge": 1305
     }
 }

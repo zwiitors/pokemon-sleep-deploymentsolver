@@ -323,5 +323,23 @@
         "type": "fairy",
         "level": 21,
         "heal_yell": 0.99
+    },
+    "オーダイル": {
+        "ingredients": {
+            "肉": 12.2
+        },
+        "berries": 1.645,
+        "type": "water",
+        "level": 25,
+        "energy_charge": 1305
+    },
+    "ネイティオ": {
+        "ingredients": {
+            "卵": 10.2
+        },
+        "berries": 1.638,
+        "type": "esper",
+        "level": 21,
+        "energy_charge": 1305
     }
 }

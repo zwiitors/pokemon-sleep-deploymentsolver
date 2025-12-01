@@ -24,16 +24,19 @@ class PokemonDeploymentSolver:
         self.dish_week = user_inputs["dish"]
         self.berry_liked = user_inputs["berries"]
         base_cook_time = [9, 15, 20]
-        self.evolution_num = 0
+        self.evolution_num = user_inputs["future"]
         self.designated_pokemon = []
         self.forbidden_pokemon = []
         self.pot_capacity = 69  # 料理の最大容量
         self.stamina_threshold = 30
-        self.use_additional_ingredient = False  # 追加食材を使用するかどうか
-        self.consider_dish_level = True
-        self.use_seed_pokemon = False
+        self.use_additional_ingredient = user_inputs["additional"]
+        self.consider_dish_level = user_inputs["level"]
+        self.use_seed_pokemon = user_inputs["seed"]
         self.dish_energy_multiplier = 1.0
         self.skill_energy_multiplier = 1.0
+        if user_inputs["cook"]:
+            self.pot_capacity *= 2
+            self.dish_energy_multiplier *= 1.25
         # 初期在庫
         self.initial_stock = user_inputs["stock"]
         self.final_stock = {
@@ -345,30 +348,31 @@ class PokemonDeploymentSolver:
 
         for ingredient in self.ingredients:
             self.food_inventory[ingredient] = {}
-            for t in range(self.start_time, self.num_hours):
+            prev_time = self.start_time
+            for t in self.cook_time:
                 # 収集量を計算
                 collected = []
                 for p in self.pokemon_data:
                     collected_var = self.pokemon_active[
                         (p, (t - self.day_switch_time) // 24)
-                    ] * self.pokemon_data[p]["ingredients"].get(ingredient, 0)
+                    ] * self.pokemon_data[p]["ingredients"].get(ingredient, 0) * (t-prev_time)
                     collected.append(collected_var)
 
                 # 前時刻の在庫（t=10 の場合は初期在庫）
                 if t == self.start_time:
                     previous_inventory = self.initial_stock.get(ingredient, 0) * 100
                 else:
-                    previous_inventory = self.food_inventory[ingredient][t - 1]
+                    previous_inventory = self.food_inventory[ingredient][prev_time]
+                prev_time = t
 
                 # 料理ごとの消費量を変数にする
                 # 各料理について食材の消費量をリニアに表現
-                if t in self.cook_time:
-                    self.consumed_ingredients[ingredient][t] = sum(
-                        self.cooked_dishes[(dish, t)]
-                        * self.dishes[dish]["ingredients"].get(ingredient, 0)
-                        * 100
-                        for dish in self.dishes
-                    )+ self.ingredients_additionals[(ingredient, t)] * 100
+                self.consumed_ingredients[ingredient][t] = sum(
+                    self.cooked_dishes[(dish, t)]
+                    * self.dishes[dish]["ingredients"].get(ingredient, 0)
+                    * 100
+                    for dish in self.dishes
+                )+ self.ingredients_additionals[(ingredient, t)] * 100
 
                 # 食材の在庫更新
                 self.food_inventory[ingredient][t] = (
@@ -392,7 +396,7 @@ class PokemonDeploymentSolver:
                 self.model.Add(sum(self.consumed_ingredients[i][t] for i in self.ingredients) <= self.pot_capacity * 100)
 
         # 全食材の合計数を制約
-        for t in range(self.start_time, self.num_hours):
+        for t in self.cook_time:
             self.model.Add(
                 sum(
                     self.food_inventory[ingredient][t]
@@ -431,8 +435,8 @@ class PokemonDeploymentSolver:
 
         self.total_energy += sum(
             self.pokemon_active[(p, d)] * self.pokemon_data[p]["berries"] * 24
-            for p in self.pokemon_data  # ポケモンリスト
-            for d in range(self.today, self.days)  # 0時～71時  # 日数
+            for p in self.pokemon_data
+            for d in range(self.today, self.days)
         )
 
         self.total_energy += sum(
@@ -577,6 +581,11 @@ with st.sidebar:
     
     for ing, val in default_stock.items():
         input_stock[ing] = st.number_input(f"{ing}", value=val, min_value=0, step=1)
+    use_additional_ingredient = st.checkbox("追加食材")
+    consider_dish_level = st.checkbox("料理レベル", value=True)
+    use_seed_pokemon = st.checkbox("未進化ポケモン")
+    event_cook_week = st.checkbox("料理ウィーク")
+    future_pokemon = st.number_input("育成枠", min_value=0, step=1)
 
 # 計算実行ボタン
 if st.button("計算開始"):
@@ -585,7 +594,12 @@ if st.button("計算開始"):
         "days": days_int,
         "stock": input_stock,
         "dish": dish_type,
-        "berries": berries_liked
+        "berries": berries_liked,
+        "additional": use_additional_ingredient,
+        "level": consider_dish_level,
+        "seed": use_seed_pokemon,
+        "cook": event_cook_week,
+        "future": future_pokemon
     }
     
     with st.spinner("計算中...（数秒〜数十秒かかります）"):
