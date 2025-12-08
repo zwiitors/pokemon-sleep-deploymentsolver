@@ -209,16 +209,6 @@
         "level": 41,
         "base": "ヨーギラス"
     },
-    "バシャーモ lv.30": {
-        "ingredients": {
-            "キノコ": 4.2,
-            "大豆": 16.6
-        },
-        "berries": 1.759,
-        "type": "fight",
-        "level": 30,
-        "base": "アチャモ"
-    },
     "ラグラージ lv.30": {
         "ingredients": {
             "コーン": 11.1
@@ -451,6 +441,15 @@
         "type": "normal",
         "level": 30,
         "base": "ピンプク"
+    },
+    "ミカルゲ lv.30": {
+        "ingredients": {
+            "キノコ": 28.0
+        },
+        "berries": 0.711,
+        "type": "dark",
+        "level": 30,
+        "base": "ミカルゲ"
     },
     "ドンカラス lv.30": {
         "ingredients": {

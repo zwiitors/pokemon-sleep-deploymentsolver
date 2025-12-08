@@ -228,6 +228,14 @@
         "level": 30,
         "heal_all": 1.785
     },
+    "ミカルゲ": {
+        "ingredients": {
+            "キノコ": 15.0
+        },
+        "berries": 0.711,
+        "type": "dark",
+        "level": 23
+    },
     "ルカリオ": {
         "ingredients": {
             "オイル": 7.7
@@ -307,6 +315,15 @@
         "level": 27,
         "berry_burst": 48.96
     },
+    "バシャーモ": {
+        "ingredients": {
+            "キノコ": 4.2,
+            "大豆": 16.6
+        },
+        "berries": 1.759,
+        "type": "fight",
+        "level": 30
+    },
     "カモネギ": {
         "ingredients": {
             "ネギ": 14.2
@@ -339,7 +356,15 @@
         },
         "berries": 1.638,
         "type": "esper",
-        "level": 21,
-        "energy_charge": 1305
+        "level": 21
+    },
+    "チルタリスS": {
+        "ingredients": {
+            "卵": 9.8
+        },
+        "berries": 2.226,
+        "type": "dragon",
+        "level": 26,
+        "heal_self":1.546 
     }
 }
