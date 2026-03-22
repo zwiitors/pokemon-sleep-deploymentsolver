@@ -315,9 +315,8 @@ class PokemonDeploymentSolver:
     def load_data(cls, filename):
         with open(filename, encoding="utf-8_sig") as f:
             pokemon_data = json.load(f)
-        st.text(pokemon_data)
         support_const = 132888
-        for p, d in pokemon_data:
+        for p, d in pokemon_data.items():
             num_berries = 1
             if d["class"] == "berry":
                 num_berries = 1 + num_berries
