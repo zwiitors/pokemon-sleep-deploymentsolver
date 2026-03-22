@@ -7,7 +7,29 @@ import streamlit as st
 
 st.set_page_config(page_title="Pokemon Sleep Solver", layout="wide")
 
+
 class PokemonDeploymentSolver:
+    BERRIES = {
+        "fire": 27,
+        "water": 31,
+        "grass": 30,
+        "poison": 32,
+        "earth": 29,
+        "electric": 25,
+        "ice": 32,
+        "dragon": 35,
+        "ghost": 26,
+        "fairy": 26,
+        "bird": 24,
+        "normal": 28,
+        "bug": 24,
+        "rock": 30,
+        "esper": 26,
+        "fight": 27,
+        "dark": 31,
+        "steel": 33,
+    }
+
     def __init__(self, user_inputs):
         self.model = cp_model.CpModel()
         self.solver = cp_model.CpSolver()
@@ -17,7 +39,9 @@ class PokemonDeploymentSolver:
         self.num_hours = 24 * self.days  # 7日間 (24h * 7)
         self.day_switch_time = 9
         self.bedin_time = 24
-        self.today = user_inputs["today"]  # 0: 月曜日, 1: 火曜日, 2: 水曜日, 3: 木曜日, 4: 金曜日, 5: 土曜日, 6: 日曜日
+        self.today = user_inputs[
+            "today"
+        ]  # 0: 月曜日, 1: 火曜日, 2: 水曜日, 3: 木曜日, 4: 金曜日, 5: 土曜日, 6: 日曜日
         self.start_time = 9
         self.start_time += self.today * 24
         self.max_active_pokemon = 5  # 最大同時動員数
@@ -57,8 +81,9 @@ class PokemonDeploymentSolver:
         }
         self.storage_limit = 999  # 食材の最大所持量
         # ポケモンリストと収集能力 (1時間あたりに修正)
-        with open("pokemon_data.json", encoding="utf-8_sig") as f:
-            self.pokemon_data = json.load(f)
+        # with open("pokemon_data.json", encoding="utf-8_sig") as f:
+        #     self.pokemon_data = json.load(f)
+        self.pokemon_data = self.load_data("pokemon_data_new_test.json")
 
         with open("seed_pokemon_data.json", encoding="utf-8_sig") as f:
             self.seed_pokemon = json.load(f)
@@ -66,45 +91,31 @@ class PokemonDeploymentSolver:
         with open("future_pokemon_data.json", encoding="utf-8_sig") as f:
             self.future_pokemon = json.load(f)
 
-        self.pokemon_data = {**self.pokemon_data, **self.seed_pokemon, **self.future_pokemon}
+        self.pokemon_data = {
+            **self.pokemon_data,
+            **self.seed_pokemon,
+            **self.future_pokemon,
+        }
 
         for pokemon in self.pokemon_data.values():
             pokemon["berries"] *= 36
             for ing_name in pokemon["ingredients"].keys():
                 pokemon["ingredients"][ing_name] *= 100
-                pokemon["ingredients"][ing_name] = int(pokemon["ingredients"][ing_name] / 24)
+                pokemon["ingredients"][ing_name] = int(
+                    pokemon["ingredients"][ing_name] / 24
+                )
 
-        self.berries = {
-            "fire": 27,
-            "water": 31,
-            "grass": 30,
-            "poison": 32,
-            "earth": 29,
-            "electric": 25,
-            "ice": 32,
-            "dragon": 35,
-            "ghost": 26,
-            "fairy": 26,
-            "bird": 24,
-            "normal": 28,
-            "bug": 24,
-            "rock": 30,
-            "esper": 26,
-            "fight": 27,
-            "dark": 31,
-            "steel": 33,
-        }
         for p in self.pokemon_data:
             if self.pokemon_data[p]["type"] in self.berry_liked:
                 self.pokemon_data[p]["berries"] = self.pokemon_data[p]["berries"] * 2
             self.pokemon_data[p]["berries"] = int(
                 self.pokemon_data[p]["berries"]
-                / self.berries[self.pokemon_data[p]["type"]]
+                / self.BERRIES[self.pokemon_data[p]["type"]]
                 * max(
-                    self.berries[self.pokemon_data[p]["type"]]
+                    self.BERRIES[self.pokemon_data[p]["type"]]
                     + self.pokemon_data[p]["level"]
                     - 1,
-                    self.berries[self.pokemon_data[p]["type"]]
+                    self.BERRIES[self.pokemon_data[p]["type"]]
                     * 1.025 ** (self.pokemon_data[p]["level"] - 1),
                 )
             )
@@ -245,8 +256,8 @@ class PokemonDeploymentSolver:
         self.stamina = {}
         for pokemon in self.pokemon_data:
             for d in range(self.today, self.days):  # 0時～71時
-                self.stamina[(pokemon, d)] = self.model.NewIntVar(-999, 999,
-                    f"stamina_{pokemon}_{d}"
+                self.stamina[(pokemon, d)] = self.model.NewIntVar(
+                    -999, 999, f"stamina_{pokemon}_{d}"
                 )
 
         self.pokemon_evolution = {}
@@ -273,7 +284,7 @@ class PokemonDeploymentSolver:
                 self.pokemon_data[p]["energy_charge"] = int(
                     self.pokemon_data[p]["energy_charge"] * self.skill_energy_multiplier
                 )
-        
+
         self.pokemon_heal_all = {}
         for p in self.pokemon_data:
             if "heal_all" in self.pokemon_data[p]:
@@ -286,23 +297,90 @@ class PokemonDeploymentSolver:
         self.heal = {}
         for p in self.pokemon_data:
             for d in range(self.today, self.days):
-                self.heal[(p,d)] = self.model.NewIntVar(0,999,f"heal_{p}_{d}")
+                self.heal[(p, d)] = self.model.NewIntVar(0, 999, f"heal_{p}_{d}")
 
-        waking_time = self.bedin_time-self.day_switch_time
+        waking_time = self.bedin_time - self.day_switch_time
         for p in self.pokemon_data:
-            self.pokemon_data[p]["heal_all"] = int(self.pokemon_data[p].get("heal_all", 0) * waking_time)
-            self.pokemon_data[p]["heal_yell"] = int(self.pokemon_data[p].get("heal_yell", 0) * waking_time)
-            self.pokemon_data[p]["heal_self"] = int(self.pokemon_data[p].get("heal_self", 0) * waking_time)
+            self.pokemon_data[p]["heal_all"] = int(
+                self.pokemon_data[p].get("heal_all", 0) * waking_time
+            )
+            self.pokemon_data[p]["heal_yell"] = int(
+                self.pokemon_data[p].get("heal_yell", 0) * waking_time
+            )
+            self.pokemon_data[p]["heal_self"] = int(
+                self.pokemon_data[p].get("heal_self", 0) * waking_time
+            )
+
+    @classmethod
+    def load_data(cls, filename):
+        with open(filename, encoding="utf-8_sig") as f:
+            pokemon_data = json.load(f)
+        support_const = 132888
+        for p, d in pokemon_data:
+            num_berries = 1
+            if d["class"] == "berry":
+                num_berries = 1 + num_berries
+            if "きのみS" in d["subskill"]:
+                num_berries = 1 + num_berries
+            support_time = d["base_support_time"]
+            support_time *= 1 - (d["level"] - 1) * 0.002
+            sup_time_mult = 1.0
+            if "おてボ" in d["subskill"]:
+                sup_time_mult -= 0.05
+            if "おてスピS" in d["subskill"]:
+                sup_time_mult -= 0.07
+            if "おてスピM" in d["subskill"]:
+                sup_time_mult -= 0.14
+            support_time *= sup_time_mult
+            if d["personality"]["up"] == "speed":
+                support_time *= 0.9
+            elif d["personality"]["down"] == "speed":
+                support_time *= 1.075
+            sup_num = support_const / support_time
+            food_p = d["food_p"]
+            fp_mult = 1.0
+            if "食材S" in d["subskill"]:
+                fp_mult += 0.18
+            if "食材M" in d["subskill"]:
+                fp_mult += 0.36
+            food_p *= fp_mult
+            if d["personality"]["up"] == "food":
+                food_p *= 1.2
+            elif d["personality"]["down"] == "food":
+                food_p *= 0.8
+            skill_p = d["skill_p"]
+            sp_mult = 1.0
+            if "スキルS" in d["subskill"]:
+                sp_mult += 0.18
+            if "スキルM" in d["subskill"]:
+                sp_mult += 0.36
+            skill_p *= sp_mult
+            if d["personality"]["up"] == "skill":
+                skill_p *= 1.2
+            elif d["personality"]["down"] == "skill":
+                skill_p *= 0.8
+            pokemon_data[p]["ingredients"] = {
+                k: v * sup_num * food_p / len(d["ingredients"])
+                for k, v in pokemon_data[p]["ingredients"].items()
+            }
+            if "mainskill" in d:
+                pokemon_data[p][d["mainskill"]["name"]] = (
+                    d["mainskill"]["value"] * sup_num * skill_p
+                )
+            pokemon_data[p]["berries"] = (
+                cls.BERRIES * 100 * num_berries / support_time * (1 - food_p - skill_p)
+            )
+        return pokemon_data
 
     def add_constraints(self):
-        self.consumed_ingredients = {i: {t: 0 for t in self.cook_time} for i in self.ingredients}
+        self.consumed_ingredients = {
+            i: {t: 0 for t in self.cook_time} for i in self.ingredients
+        }
 
         if not self.use_seed_pokemon:
             for p in self.seed_pokemon:
                 for d in range(self.today, self.days):
-                    self.model.Add(
-                        self.pokemon_active[(p, d)] == 0
-                    )
+                    self.model.Add(self.pokemon_active[(p, d)] == 0)
 
         # 各ポケモンの動員数を進化前のポケモンの進化数以下に制限
         for p in self.pokemon_data:
@@ -353,9 +431,11 @@ class PokemonDeploymentSolver:
                 # 収集量を計算
                 collected = []
                 for p in self.pokemon_data:
-                    collected_var = self.pokemon_active[
-                        (p, (t - self.day_switch_time) // 24)
-                    ] * self.pokemon_data[p]["ingredients"].get(ingredient, 0) * (t-prev_time)
+                    collected_var = (
+                        self.pokemon_active[(p, (t - self.day_switch_time) // 24)]
+                        * self.pokemon_data[p]["ingredients"].get(ingredient, 0)
+                        * (t - prev_time)
+                    )
                     collected.append(collected_var)
 
                 # 前時刻の在庫（t=10 の場合は初期在庫）
@@ -367,22 +447,27 @@ class PokemonDeploymentSolver:
 
                 # 料理ごとの消費量を変数にする
                 # 各料理について食材の消費量をリニアに表現
-                self.consumed_ingredients[ingredient][t] = sum(
-                    self.cooked_dishes[(dish, t)]
-                    * self.dishes[dish]["ingredients"].get(ingredient, 0)
-                    * 100
-                    for dish in self.dishes
-                )+ self.ingredients_additionals[(ingredient, t)] * 100
+                self.consumed_ingredients[ingredient][t] = (
+                    sum(
+                        self.cooked_dishes[(dish, t)]
+                        * self.dishes[dish]["ingredients"].get(ingredient, 0)
+                        * 100
+                        for dish in self.dishes
+                    )
+                    + self.ingredients_additionals[(ingredient, t)] * 100
+                )
 
                 # 食材の在庫更新
                 self.food_inventory[ingredient][t] = (
-                    previous_inventory + sum(collected) - self.consumed_ingredients[ingredient].get(t, 0)
+                    previous_inventory
+                    + sum(collected)
+                    - self.consumed_ingredients[ingredient].get(t, 0)
                 )
 
                 # 在庫が負にならない制約を追加
                 self.model.Add(self.food_inventory[ingredient][t] >= 0)
 
-        #for ingredient in self.ingredients:
+        # for ingredient in self.ingredients:
         #    self.model.Add(
         #        self.food_inventory[ingredient][self.num_hours-1]
         #        >= self.final_stock.get(ingredient, 0) * 100
@@ -391,9 +476,15 @@ class PokemonDeploymentSolver:
         for t in self.cook_time:
             # 料理の容量制約
             if t // 24 == 6:
-                self.model.Add(sum(self.consumed_ingredients[i][t] for i in self.ingredients) <= self.pot_capacity * 200)
+                self.model.Add(
+                    sum(self.consumed_ingredients[i][t] for i in self.ingredients)
+                    <= self.pot_capacity * 200
+                )
             else:
-                self.model.Add(sum(self.consumed_ingredients[i][t] for i in self.ingredients) <= self.pot_capacity * 100)
+                self.model.Add(
+                    sum(self.consumed_ingredients[i][t] for i in self.ingredients)
+                    <= self.pot_capacity * 100
+                )
 
         # 全食材の合計数を制約
         for t in self.cook_time:
@@ -405,21 +496,44 @@ class PokemonDeploymentSolver:
                 <= self.storage_limit * 100
             )
 
-        waking_time = self.bedin_time-self.day_switch_time
+        waking_time = self.bedin_time - self.day_switch_time
         heal_per_day = defaultdict(int)
         for p in self.pokemon_heal_all:
             for d in range(self.today, self.days):
-                heal_per_day[d] += self.pokemon_data[p]["heal_all"] * self.pokemon_active[(p,d)]
+                heal_per_day[d] += (
+                    self.pokemon_data[p]["heal_all"] * self.pokemon_active[(p, d)]
+                )
 
         for d in range(self.today, self.days):
-            self.model.Add(sum(self.heal[(p,d)] for p in self.pokemon_data) <= self.heal_pool[d])
-            self.model.Add(self.heal_pool[d] <= sum(self.pokemon_data[p].get("heal_yell", 0)*self.pokemon_active[(p,d)] for p in self.pokemon_data))
+            self.model.Add(
+                sum(self.heal[(p, d)] for p in self.pokemon_data) <= self.heal_pool[d]
+            )
+            self.model.Add(
+                self.heal_pool[d]
+                <= sum(
+                    self.pokemon_data[p].get("heal_yell", 0)
+                    * self.pokemon_active[(p, d)]
+                    for p in self.pokemon_data
+                )
+            )
 
         for p in self.pokemon_data:
             for d in range(self.today, self.days):
-                heal_ammount = self.pokemon_data[p].get("heal_self", 0) + heal_per_day[d] + self.heal[(p,d)]
-                self.model.Add(self.stamina[(p,d)] == 100-waking_time*6*self.pokemon_active[(p,d)] + heal_ammount)
-                self.model.Add(self.stamina[(p,d)] >= self.stamina_threshold * self.pokemon_active[(p,d)])
+                heal_ammount = (
+                    self.pokemon_data[p].get("heal_self", 0)
+                    + heal_per_day[d]
+                    + self.heal[(p, d)]
+                )
+                self.model.Add(
+                    self.stamina[(p, d)]
+                    == 100
+                    - waking_time * 6 * self.pokemon_active[(p, d)]
+                    + heal_ammount
+                )
+                self.model.Add(
+                    self.stamina[(p, d)]
+                    >= self.stamina_threshold * self.pokemon_active[(p, d)]
+                )
 
         # 料理によるエナジーの合計を最大化
         self.total_energy = sum(
@@ -453,13 +567,17 @@ class PokemonDeploymentSolver:
         status = self.solver.Solve(self.model)
         if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
             if status == cp_model.OPTIMAL:
-                st.success(f"最適解を発見しました。獲得エナジー: {self.solver.Value(self.total_energy)}")
+                st.success(
+                    f"最適解を発見しました。獲得エナジー: {self.solver.Value(self.total_energy)}"
+                )
             elif status == cp_model.FEASIBLE:
-                st.success(f"実行可能解を発見しました。獲得エナジー: {self.solver.Value(self.total_energy)}")
+                st.success(
+                    f"実行可能解を発見しました。獲得エナジー: {self.solver.Value(self.total_energy)}"
+                )
             st.subheader("日ごとの編成")
             for d in range(self.today, self.days):
                 active_pokemon = [
-                    f"{p}({str(self.solver.Value(self.stamina[(p,d)]))})"
+                    f"{p}({str(self.solver.Value(self.stamina[(p, d)]))})"
                     for p in self.pokemon_data
                     if self.solver.Value(self.pokemon_active[(p, d)])
                 ]
@@ -478,7 +596,7 @@ class PokemonDeploymentSolver:
                     ]
                 )
                 st.text(
-                    f"日 {t//24} 時間 {t%24}: {formatted_inventory}, 合計:{sum(self.solver.Value(self.food_inventory[ingredient][t]) / 100 for ingredient in self.food_inventory):.1f}"
+                    f"日 {t // 24} 時間 {t % 24}: {formatted_inventory}, 合計:{sum(self.solver.Value(self.food_inventory[ingredient][t]) / 100 for ingredient in self.food_inventory):.1f}"
                 )
 
             st.subheader("\n=== 各時間の料理作成状況 ===")
@@ -490,10 +608,10 @@ class PokemonDeploymentSolver:
                 ]
                 if cooked_dishes:
                     st.text(
-                        f"日 {t//24} 時間 {t%24}: 作成 {', '.join(cooked_dishes)} (容量 {sum(self.solver.Value(self.consumed_ingredients[i][t]) for i in self.ingredients):.1f})"
+                        f"日 {t // 24} 時間 {t % 24}: 作成 {', '.join(cooked_dishes)} (容量 {sum(self.solver.Value(self.consumed_ingredients[i][t]) for i in self.ingredients):.1f})"
                     )
                 else:
-                    st.text(f"日 {t//24} 時間 {t%24}: 作成なし")
+                    st.text(f"日 {t // 24} 時間 {t % 24}: 作成なし")
             st.subheader("\n=== 各時間の追加食材の使用量 ===")
             for t in self.cook_time:
                 additional_ingredients = {
@@ -510,11 +628,12 @@ class PokemonDeploymentSolver:
                     ]
                 )
                 if formatted_additionals:
-                    st.text(f"日 {t//24} 時間 {t%24}: {formatted_additionals}")
+                    st.text(f"日 {t // 24} 時間 {t % 24}: {formatted_additionals}")
                 else:
-                    st.text(f"日 {t//24} 時間 {t%24}: 追加食材なし")
+                    st.text(f"日 {t // 24} 時間 {t % 24}: 追加食材なし")
         else:
             st.error("解が見つかりませんでした。")
+
 
 # --- メイン処理（UI部分） ---
 st.title("Pokemon Sleep 最適編成ソルバー")
@@ -522,34 +641,38 @@ st.title("Pokemon Sleep 最適編成ソルバー")
 # サイドバーで条件設定
 with st.sidebar:
     st.header("設定")
-    day_mapping = {"月":0, "火":1, "水":2, "木":3, "金":4, "土":5, "日":6}
+    day_mapping = {"月": 0, "火": 1, "水": 2, "木": 3, "金": 4, "土": 5, "日": 6}
     selected_day = st.selectbox("現在の曜日", list(day_mapping.keys()))
-    max_day = st.selectbox("計算する期間", list(map(lambda x: x+"曜日まで", day_mapping.keys())))
+    max_day = st.selectbox(
+        "計算する期間", list(map(lambda x: x + "曜日まで", day_mapping.keys()))
+    )
     today_int = day_mapping[selected_day]
-    days_int = day_mapping[max_day[0]]+1
-    berries_liked = [0,0,0]
+    days_int = day_mapping[max_day[0]] + 1
+    berries_liked = [0, 0, 0]
     berries = {
-            "ほのお": "fire",
-            "みず": "water",
-            "くさ": "grass",
-            "どく": "poison",
-            "じめん": "earth",
-            "でんき": "electric",
-            "こおり": "ice",
-            "ドラゴン": "dragon",
-            "ゴースト": "ghost",
-            "フェアリー": "fairy",
-            "ひこう": "bird",
-            "ノーマル": "normal",
-            "むし": "bug",
-            "いわ": "rock",
-            "エスパー": "esper",
-            "かくとう": "fight",
-            "あく": "dark",
-            "はがね": "steel",
-        }
+        "ほのお": "fire",
+        "みず": "water",
+        "くさ": "grass",
+        "どく": "poison",
+        "じめん": "earth",
+        "でんき": "electric",
+        "こおり": "ice",
+        "ドラゴン": "dragon",
+        "ゴースト": "ghost",
+        "フェアリー": "fairy",
+        "ひこう": "bird",
+        "ノーマル": "normal",
+        "むし": "bug",
+        "いわ": "rock",
+        "エスパー": "esper",
+        "かくとう": "fight",
+        "あく": "dark",
+        "はがね": "steel",
+    }
     for i in range(3):
-        berries_liked[i] = st.selectbox(f"カビゴンの好きなきのみ{(i+1)}", list(berries.keys()))
+        berries_liked[i] = st.selectbox(
+            f"カビゴンの好きなきのみ{(i + 1)}", list(berries.keys())
+        )
     berries_liked = [berries[k] for k in berries_liked]
 
     dish_type = st.selectbox("料理タイプ", ["カレー", "サラダ", "デザート"])
@@ -558,27 +681,27 @@ with st.sidebar:
     input_stock = {}
     # 現在の在庫リストにある食材を入力欄として表示
     default_stock = {
-            "ネギ": 0,
-            "キノコ": 0,
-            "卵": 0,
-            "イモ": 0,
-            "リンゴ": 0,
-            "ハーブ": 0,
-            "肉": 0,
-            "牛乳": 0,
-            "ミツ": 0,
-            "オイル": 0,
-            "ジンジャー": 0,
-            "トマト": 0,
-            "カカオ": 0,
-            "大豆": 0,
-            "コーン": 0,
-            "コーヒー": 0,
-            "シッポ": 0,
-            "カボチャ": 0,
-            "アボカド": 0,
-        }
-    
+        "ネギ": 0,
+        "キノコ": 0,
+        "卵": 0,
+        "イモ": 0,
+        "リンゴ": 0,
+        "ハーブ": 0,
+        "肉": 0,
+        "牛乳": 0,
+        "ミツ": 0,
+        "オイル": 0,
+        "ジンジャー": 0,
+        "トマト": 0,
+        "カカオ": 0,
+        "大豆": 0,
+        "コーン": 0,
+        "コーヒー": 0,
+        "シッポ": 0,
+        "カボチャ": 0,
+        "アボカド": 0,
+    }
+
     for ing, val in default_stock.items():
         input_stock[ing] = st.number_input(f"{ing}", value=val, min_value=0, step=1)
     use_additional_ingredient = st.checkbox("追加食材")
@@ -599,9 +722,9 @@ if st.button("計算開始"):
         "level": consider_dish_level,
         "seed": use_seed_pokemon,
         "cook": event_cook_week,
-        "future": future_pokemon
+        "future": future_pokemon,
     }
-    
+
     with st.spinner("計算中...（数秒〜数十秒かかります）"):
         solver = PokemonDeploymentSolver(user_inputs)
         solver.solve()

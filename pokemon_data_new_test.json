@@ -1,0 +1,664 @@
+{
+    "フシギバナ": {
+        "ingredients": {
+            "ミツ": 2
+        },
+        "class": "food",
+        "type": "grass",
+        "base_support_time": 2800,
+        "food_p": 0.266,
+        "skill_p": 0.021,
+        "level": 28,
+        "subskill": [
+            "所持数L",
+            "食材M"
+        ],
+        "personality": {
+            "up": "",
+            "down": ""
+        }
+    },
+    "リザードン": {
+        "ingredients": {
+            "肉": 2,
+            "ジンジャー": 4
+        },
+        "class": "food",
+        "type": "fire",
+        "base_support_time": 2400,
+        "food_p": 0.224,
+        "skill_p": 0.021,
+        "level": 43,
+        "subskill": [
+            "きのみS",
+            "食材M"
+        ],
+        "personality": {
+            "up": "stamina",
+            "down": "skill"
+        }
+    },
+    "カメックス": {
+        "ingredients": {
+            "牛乳": 2
+        },
+        "class": "food",
+        "type": "water",
+        "base_support_time": 2800,
+        "food_p": 0.275,
+        "skill_p": 0.021,
+        "level": 27,
+        "subskill": [
+            "おてスピS",
+            "所持数L"
+        ],
+        "personality": {
+            "up": "",
+            "down": ""
+        }
+    },
+    "バタフリー": {
+        "ingredients": {
+            "ミツ": 1
+        },
+        "class": "berry",
+        "type": "bug",
+        "base_support_time": 2500,
+        "food_p": 0.197,
+        "skill_p": 0.014,
+        "level": 12,
+        "subskill": [
+            "げんきボーナス"
+        ],
+        "personality": {
+            "up": "food",
+            "down": "speed"
+        }
+    },
+    "ラッタ": {
+        "ingredients": {
+            "リンゴ": 1,
+            "大豆": 2
+        },
+        "class": "berry",
+        "type": "normal",
+        "base_support_time": 2950,
+        "food_p": 0.237,
+        "skill_p": 0.030,
+        "level": 33,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 16
+        },
+        "subskill": [
+            "睡眠EXP",
+            "食材S"
+        ],
+        "personality": {
+            "up": "speed",
+            "down": "food"
+        }
+    },
+    "アーボック": {
+        "ingredients": {
+            "肉": 1
+        },
+        "class": "berry",
+        "type": "poison",
+        "base_support_time": 3400,
+        "food_p": 0.264,
+        "skill_p": 0.057,
+        "level": 17,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 16
+        },
+        "subskill": [
+            "睡眠EXP"
+        ],
+        "personality": {
+            "up": "",
+            "down": ""
+        }
+    },
+    "ライチュウS": {
+        "ingredients": {
+            "リンゴ": 1.5
+        },
+        "class": "berry",
+        "type": "electric",
+        "base_support_time": 2200,
+        "food_p": 0.224,
+        "skill_p": 0.032,
+        "level": 37,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 569
+        },
+        "subskill": [
+            "きのみS",
+            "食材S"
+        ],
+        "personality": {
+            "up": "stamina",
+            "down": "speed"
+        }
+    },
+    "ライチュウ": {
+        "ingredients": {
+            "リンゴ": 1,
+            "ジンジャー": 2
+        },
+        "class": "berry",
+        "type": "electric",
+        "base_support_time": 2200,
+        "food_p": 0.224,
+        "skill_p": 0.032,
+        "level": 48,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 785
+        },
+        "subskill": [
+            "睡眠EXP",
+            "おてスピS"
+        ],
+        "personality": {
+            "up": "skill",
+            "down": "speed"
+        }
+    },
+    "アローラキュウコン": {
+        "ingredients": {
+            "大豆": 1
+        },
+        "class": "berry",
+        "type": "ice",
+        "base_support_time": 2900,
+        "food_p": 0.232,
+        "skill_p": 0.028,
+        "level": 8,
+        "subskill": [],
+        "personality": {
+            "up": "stamina",
+            "down": "exp"
+        }
+    },
+    "ウツボット": {
+        "ingredients": {
+            "トマト": 2
+        },
+        "class": "food",
+        "type": "grass",
+        "base_support_time": 2800,
+        "food_p": 0.233,
+        "skill_p": 0.039,
+        "level": 25,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 21
+        },
+        "subskill": [
+            "おてスピM",
+            "食材S"
+        ],
+        "personality": {
+            "up": "stamina",
+            "down": "skill"
+        }
+    },
+    "ヤドラン": {
+        "ingredients": {
+            "カカオ": 1
+        },
+        "class": "skill",
+        "type": "water",
+        "base_support_time": 3800,
+        "food_p": 0.197,
+        "skill_p": 0.080,
+        "level": 21,
+        "mainskill": {
+            "name": "heal_yell",
+            "value": 12
+        },
+        "subskill": [
+            "所持数S"
+        ],
+        "personality": {
+            "up": "exp",
+            "down": "food"
+        }
+    },
+    "カモネギ": {
+        "ingredients": {
+            "ネギ": 2
+        },
+        "class": "food",
+        "type": "bird",
+        "base_support_time": 3000,
+        "food_p": 0.160,
+        "skill_p": 0.043,
+        "level": 24,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 400
+        },
+        "subskill": [
+            "所持数M"
+        ],
+        "personality": {
+            "up": "exp",
+            "down": "food"
+        }
+    },
+    "ゲンガー": {
+        "ingredients": {
+            "ハーブ": 2,
+            "キノコ": 4
+        },
+        "class": "food",
+        "type": "ghost",
+        "base_support_time": 2200,
+        "food_p": 0.161,
+        "skill_p": 0.024,
+        "level": 32,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 711.5
+        },
+        "subskill": [
+            "おてスピS",
+            "スキルS"
+        ],
+        "personality": {
+            "up": "skill",
+            "down": "stamina"
+        }
+    },
+    "イワーク": {
+        "ingredients": {
+            "トマト": 1
+        },
+        "class": "berry",
+        "type": "rock",
+        "base_support_time": 3100,
+        "food_p": 0.132,
+        "skill_p": 0.023,
+        "level": 21,
+        "subskill": [
+            "所持数S"
+        ],
+        "personality": {
+            "up": "",
+            "down": ""
+        }
+    },
+    "カイロス": {
+        "ingredients": {
+            "ミツ": 2,
+            "リンゴ": 5
+        },
+        "class": "food",
+        "type": "bug",
+        "base_support_time": 2400,
+        "food_p": 0.216,
+        "skill_p": 0.031,
+        "level": 34,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 880
+        },
+        "subskill": [
+            "スキルM",
+            "リサーチEXP"
+        ],
+        "personality": {
+            "up": "speed",
+            "down": "exp"
+        }
+    },
+    "メタモン": {
+        "ingredients": {
+            "オイル": 2
+        },
+        "class": "food",
+        "type": "normal",
+        "base_support_time": 3500,
+        "food_p": 0.201,
+        "skill_p": 0.036,
+        "level": 22,
+        "subskill": [
+            "所持数M"
+        ],
+        "personality": {
+            "up": "food",
+            "down": "speed"
+        }
+    },
+    "ブースター": {
+        "ingredients": {
+            "牛乳": 1,
+            "カカオ": 1
+        },
+        "class": "skill",
+        "type": "fire",
+        "base_support_time": 2700,
+        "food_p": 0.185,
+        "skill_p": 0.052,
+        "level": 30,
+        "mainskill": {
+            "name": "dish_power",
+            "value": 10
+        },
+        "subskill": [
+            "スキルS",
+            "おてスピS"
+        ],
+        "personality": {
+            "up": "speed",
+            "down": "stamina"
+        }
+    },
+    "カイリュー": {
+        "ingredients": {
+            "ハーブ": 2,
+            "コーン": 4
+        },
+        "class": "food",
+        "type": "dragon",
+        "base_support_time": 2600,
+        "food_p": 0.264,
+        "skill_p": 0.026,
+        "level": 41,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 21
+        },
+        "subskill": [
+            "かけらボーナス",
+            "スキルM"
+        ],
+        "personality": {
+            "up": "exp",
+            "down": "food"
+        }
+    },
+    "ミュウ": {
+        "ingredients": {
+            "卵": 2
+        },
+        "class": "berry",
+        "type": "esper",
+        "base_support_time": 2900,
+        "food_p": 0.200,
+        "skill_p": 0.040,
+        "level": 27,
+        "subskill": [
+            "スキルレベルM",
+            "きのみS"
+        ],
+        "personality": {
+            "up": "",
+            "down": ""
+        }
+    },
+    "オーダイル": {
+        "ingredients": {
+            "肉": 1
+        },
+        "class": "berry",
+        "type": "water",
+        "base_support_time": 2800,
+        "food_p": 0.257,
+        "skill_p": 0.055,
+        "level": 27,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 500
+        },
+        "subskill": [
+            "所持数M",
+            "おてスピS"
+        ],
+        "personality": {
+            "up": "speed",
+            "down": "exp"
+        }
+    },
+    "ネイティオ": {
+        "ingredients": {
+            "卵": 1
+        },
+        "class": "berry",
+        "type": "esper",
+        "base_support_time": 2500,
+        "food_p": 0.191,
+        "skill_p": 0.025,
+        "level": 21,
+        "subskill": [
+            "おてスピS"
+        ],
+        "personality": {
+            "up": "stamina",
+            "down": "skill"
+        }
+    },
+    "デンリュウ": {
+        "ingredients": {
+            "ハーブ": 1
+        },
+        "class": "skill",
+        "type": "electric",
+        "base_support_time": 2500,
+        "food_p": 0.130,
+        "skill_p": 0.047,
+        "level": 26,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 1726
+        },
+        "subskill": [
+            "所持数S",
+            "食材S"
+        ],
+        "personality": {
+            "up": "food",
+            "down": "stamina"
+        }
+    },
+    "ウソッキー": {
+        "ingredients": {
+            "トマト": 1,
+            "大豆": 2
+        },
+        "class": "skill",
+        "type": "rock",
+        "base_support_time": 4000,
+        "food_p": 0.217,
+        "skill_p": 0.072,
+        "level": 50,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 2383
+        },
+        "subskill": [
+            "スキルレベルM",
+            "スキルS",
+            "かけらボーナス"
+        ],
+        "personality": {
+            "up": "exp",
+            "down": "speed"
+        }
+    },
+    "ヌオー": {
+        "ingredients": {
+            "キノコ": 2
+        },
+        "class": "food",
+        "type": "water",
+        "base_support_time": 3400,
+        "food_p": 0.190,
+        "skill_p": 0.032,
+        "level": 26,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 21
+        },
+        "subskill": [
+            "げんきボーナス",
+            "スキルレベルS"
+        ],
+        "personality": {
+            "up": "",
+            "down": ""
+        }
+    },
+    "ブラッキー": {
+        "ingredients": {
+            "牛乳": 1
+        },
+        "class": "skill",
+        "type": "dark",
+        "base_support_time": 3200,
+        "food_p": 0.219,
+        "skill_p": 0.101,
+        "level": 22,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 21
+        },
+        "subskill": [
+            "スキルレベルS"
+        ],
+        "personality": {
+            "up": "speed",
+            "down": "skill"
+        }
+    },
+    "ヘラクロス": {
+        "ingredients": {
+            "ミツ": 1
+        },
+        "class": "skill",
+        "type": "bug",
+        "base_support_time": 2300,
+        "food_p": 0.158,
+        "skill_p": 0.047,
+        "level": 19,
+        "subskill": [
+            "スキルM"
+        ],
+        "personality": {
+            "up": "",
+            "down": ""
+        }
+    },
+    "デリバード": {
+        "ingredients": {
+            "卵": 2
+        },
+        "class": "food",
+        "type": "bird",
+        "base_support_time": 2500,
+        "food_p": 0.188,
+        "skill_p": 0.030,
+        "level": 21,
+        "subskill": [
+            "おてスピS"
+        ],
+        "personality": {
+            "up": "speed",
+            "down": "exp"
+        }
+    },
+    "ジュカイン": {
+        "ingredients": {
+            "卵": 1,
+            "カカオ": 2
+        },
+        "class": "skill",
+        "type": "grass",
+        "base_support_time": 2300,
+        "food_p": 0.107,
+        "skill_p": 0.030,
+        "level": 33,
+        "mainskill": {
+            "name": "berry_burst",
+            "value": 24
+        },
+        "subskill": [
+            "おてスピM",
+            "スキルレベルS"
+        ],
+        "personality": {
+            "up": "speed",
+            "down": "exp"
+        }
+    },
+    "バシャーモ": {
+        "ingredients": {
+            "キノコ": 1,
+            "大豆": 4
+        },
+        "class": "berry",
+        "type": "fight",
+        "base_support_time": 2600,
+        "food_p": 0.153,
+        "skill_p": 0.049,
+        "level": 31,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 21
+        },
+        "subskill": [
+            "所持数L",
+            "おてスピM"
+        ],
+        "personality": {
+            "up": "exp",
+            "down": "stamina"
+        }
+    },
+    "クチート": {
+        "ingredients": {
+            "オイル": 2
+        },
+        "class": "food",
+        "type": "steel",
+        "base_support_time": 3200,
+        "food_p": 0.204,
+        "skill_p": 0.038,
+        "level": 20,
+        "subskill": [
+            "スキルレベルS"
+        ],
+        "personality": {
+            "up": "stamina",
+            "down": "speed"
+        }
+    },
+    "チルタリス": {
+        "ingredients": {
+            "卵": 1
+        },
+        "class": "berry",
+        "type": "dragon",
+        "base_support_time": 3500,
+        "food_p": 0.258,
+        "skill_p": 0.061,
+        "level": 27,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 16
+        },
+        "subskill": [
+            "きのみS",
+            "食材S"
+        ],
+        "personality": {
+            "up": "food",
+            "down": "skill"
+        }
+    }
+}
