@@ -302,13 +302,13 @@ class PokemonDeploymentSolver:
         waking_time = self.bedin_time - self.day_switch_time
         for p in self.pokemon_data:
             self.pokemon_data[p]["heal_all"] = int(
-                self.pokemon_data[p].get("heal_all", 0) * waking_time
+                self.pokemon_data[p].get("heal_all", 0) * waking_time / 24
             )
             self.pokemon_data[p]["heal_yell"] = int(
-                self.pokemon_data[p].get("heal_yell", 0) * waking_time
+                self.pokemon_data[p].get("heal_yell", 0) * waking_time / 24
             )
             self.pokemon_data[p]["heal_self"] = int(
-                self.pokemon_data[p].get("heal_self", 0) * waking_time
+                self.pokemon_data[p].get("heal_self", 0) * waking_time / 24
             )
 
     @classmethod
