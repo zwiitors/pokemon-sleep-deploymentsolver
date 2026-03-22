@@ -368,7 +368,11 @@ class PokemonDeploymentSolver:
                     d["mainskill"]["value"] * sup_num * skill_p
                 )
             pokemon_data[p]["berries"] = (
-                cls.BERRIES * 100 * num_berries / support_time * (1 - food_p - skill_p)
+                cls.BERRIES[d["type"]]
+                * 100
+                * num_berries
+                / support_time
+                * (1 - food_p - skill_p)
             )
         return pokemon_data
 
