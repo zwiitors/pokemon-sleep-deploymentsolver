@@ -554,6 +554,24 @@
             "down": ""
         }
     },
+    "ニューラ": {
+        "ingredients": {
+            "肉": 1
+        },
+        "class": "berry",
+        "type": "dark",
+        "base_support_time": 3200,
+        "food_p": 0.255,
+        "skill_p": 0.019,
+        "level": 21,
+        "subskill": [
+            "スキルS"
+        ],
+        "personality": {
+            "up": "food",
+            "down": "speed"
+        }
+    },
     "デリバード": {
         "ingredients": {
             "卵": 2
