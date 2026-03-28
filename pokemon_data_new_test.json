@@ -685,29 +685,6 @@
             "down": "stamina"
         }
     },
-    "チルタリス": {
-        "ingredients": {
-            "卵": 1
-        },
-        "class": "berry",
-        "type": "dragon",
-        "base_support_time": 3500,
-        "food_p": 0.258,
-        "skill_p": 0.061,
-        "level": 27,
-        "mainskill": {
-            "name": "heal_self",
-            "value": 16
-        },
-        "subskill": [
-            "きのみS",
-            "食材S"
-        ],
-        "personality": {
-            "up": "food",
-            "down": "skill"
-        }
-    },
     "ミカルゲ": {
         "ingredients": {
             "キノコ": 2
@@ -724,6 +701,30 @@
         "personality": {
             "up": "exp",
             "down": "food"
+        }
+    },
+    "ドクロッグ": {
+        "ingredients": {
+            "オイル": 2,
+            "肉": 5
+        },
+        "class": "food",
+        "type": "poison",
+        "base_support_time": 3400,
+        "food_p": 0.229,
+        "skill_p": 0.043,
+        "level": 31,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 569
+        },
+        "subskill": [
+            "食材M",
+            "食材S"
+        ],
+        "personality": {
+            "up": "food",
+            "down": "speed"
         }
     },
     "ジバコイル": {
