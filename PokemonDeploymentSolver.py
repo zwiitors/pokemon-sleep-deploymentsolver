@@ -58,6 +58,7 @@ class PokemonDeploymentSolver:
         self.use_seed_pokemon = user_inputs["seed"]
         self.dish_energy_multiplier = 1.0
         self.skill_energy_multiplier = 1.0
+        self.solver.parameters.relative_gap_limit = 0.005
         if user_inputs["cook"]:
             self.pot_capacity *= 2
             self.dish_energy_multiplier *= 1.25
@@ -271,7 +272,7 @@ class PokemonDeploymentSolver:
         for ingredient in self.ingredients.keys():
             for t in self.cook_time:
                 self.ingredients_additionals[(ingredient, t)] = self.model.NewIntVar(
-                    0, self.storage_limit, f"additional_{ingredient}_{t}"
+                    0, self.pot_capacity * 2, f"additional_{ingredient}_{t}"
                 )
         for p in self.pokemon_data:
             if "berry_burst" in self.pokemon_data[p]:
