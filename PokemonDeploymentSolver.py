@@ -583,7 +583,7 @@ class PokemonDeploymentSolver:
 
         # ポケモンの採用(1)を優先して探索させる
         self.model.AddDecisionStrategy(
-            pokemon_vars, cp_model.CHOOSE_FIRST_UNBOUND, cp_model.SELECT_MAX_VALUE
+            pokemon_vars, cp_model.CHOOSE_FIRST, cp_model.SELECT_MAX_VALUE
         )
         status = self.solver.Solve(self.model)
         if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
