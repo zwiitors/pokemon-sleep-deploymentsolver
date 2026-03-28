@@ -64,7 +64,7 @@ class PokemonDeploymentSolver:
         # 初期在庫
         self.initial_stock = user_inputs["stock"]
         if user_inputs["ing_no_limit"]:
-            self.initial_stock = {k: float("inf") for k in self.initial_stock.keys()}
+            self.initial_stock = {k: 999 for k in self.initial_stock.keys()}
         self.final_stock = {
             "キノコ": 0,
             "卵": 0,
@@ -81,7 +81,7 @@ class PokemonDeploymentSolver:
             "大豆": 0,
             "コーヒー": 0,
         }
-        self.storage_limit = float("inf")  # 食材の最大所持量
+        self.storage_limit = 999999  # 食材の最大所持量
         # ポケモンリストと収集能力 (1時間あたりに修正)
         # with open("pokemon_data.json", encoding="utf-8_sig") as f:
         #     self.pokemon_data = json.load(f)
