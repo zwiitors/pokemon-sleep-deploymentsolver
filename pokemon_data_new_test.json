@@ -186,14 +186,14 @@
     },
     "ウツボット": {
         "ingredients": {
-            "トマト": 2
+            "トマト": 3.5
         },
         "class": "food",
         "type": "grass",
         "base_support_time": 2800,
         "food_p": 0.233,
         "skill_p": 0.039,
-        "level": 25,
+        "level": 30,
         "mainskill": {
             "name": "heal_self",
             "value": 21
