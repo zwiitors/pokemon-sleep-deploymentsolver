@@ -559,7 +559,7 @@ class PokemonDeploymentSolver:
             for d in range(self.today, self.days)
         )
 
-        self.skill_energy += sum(
+        self.skill_energy = sum(
             (self.pokemon_active[(p, d)] * self.pokemon_data[p].get("energy_charge", 0))
             for p in self.pokemon_data
             for d in range(self.today, self.days)
