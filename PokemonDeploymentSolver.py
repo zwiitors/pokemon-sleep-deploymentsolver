@@ -90,8 +90,7 @@ class PokemonDeploymentSolver:
         with open("seed_pokemon_data.json", encoding="utf-8_sig") as f:
             self.seed_pokemon = json.load(f)
 
-        with open("future_pokemon_data.json", encoding="utf-8_sig") as f:
-            self.future_pokemon = json.load(f)
+        self.future_pokemon = self.load_data("future_pokemon_data.json")
 
         self.pokemon_data = {
             **self.pokemon_data,
@@ -320,6 +319,10 @@ class PokemonDeploymentSolver:
         support_const = 132888
         for p, d in pokemon_data.items():
             num_berries = 1
+            if "subskill" not in d:
+                d["subskill"] = []
+            if "personality" not in d:
+                d["personality"] = {"up": "", "down": ""}
             if d["class"] == "berry":
                 num_berries = 1 + num_berries
             if "きのみS" in d["subskill"]:

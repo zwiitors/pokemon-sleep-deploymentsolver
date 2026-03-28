@@ -1,491 +1,891 @@
 {
-    "カメックス lv.30": {
+    "フシギバナAA lv.30": {
         "ingredients": {
-            "牛乳": 13.9,
-            "カカオ": 20.8
+            "ミツ": 3.5
         },
-        "berries": 0.803,
-        "type": "water",
-        "level": 30,
-        "base": "カメール"
-    },
-    "ドオー lv.30 AB": {
-        "ingredients": {
-            "カカオ": 8.4,
-            "コーヒー": 16.8
-        },
-        "berries": 0.724,
-        "type": "poison",
-        "level": 30,
-        "base": "パルデアウパー AB"
-    },
-    "ドオー lv.30 AA": {
-        "ingredients": {
-            "カカオ": 29.4
-        },
-        "berries": 0.724,
-        "type": "poison",
-        "level": 30,
-        "base": "ドオー"
-    },
-    "ダグトリオ lv.30": {
-        "ingredients": {
-            "トマト": 9.6,
-            "ネギ": 14.4
-        },
-        "berries": 0.839,
-        "type": "earth",
-        "level": 30,
-        "base": "ディグダ"
-    },
-    "ゴルダック lv.30": {
-        "ingredients": {
-            "カカオ": 3.4,
-            "リンゴ": 13.5
-        },
-        "berries": 0.764,
-        "type": "water",
-        "level": 30,
-        "energy_charge": 3479.235,
-        "base": "コダック"
-    },
-    "オコリザル lv.30": {
-        "ingredients": {
-            "肉": 15.1
-        },
-        "berries": 1.543,
-        "type": "fight",
-        "level": 30,
-        "energy_charge": 1543.56,
-        "base": "マンキー"
-    },
-    "ウツボット lv.30": {
-        "ingredients": {
-            "トマト": 41.2
-        },
-        "berries": 0.821,
+        "class": "food",
         "type": "grass",
-        "level": 30,
-        "base": "ウツドン"
-    },
-    "レントラー lv.30": {
-        "ingredients": {
-            "トマト": 11.8,
-            "オイル": 23.6
-        },
-        "berries": 0.834,
-        "type": "electric",
-        "level": 30,
-        "base": "コリンク"
-    },
-    "バリヤード lv.30": {
-        "ingredients": {
-            "トマト": 38.2
-        },
-        "berries": 0.728,
-        "type": "esper",
-        "level": 30,
-        "base": "マネネ"
-    },
-    "ユキノオー lv.30": {
-        "ingredients": {
-            "トマト": 41.2
-        },
-        "berries": 0.800,
-        "type": "ice",
-        "level": 30,
-        "base": "ユキカブリ"
-    },
-    "ハクリュー lv.41": {
-        "ingredients": {
-            "ハーブ": 34.1
-        },
-        "berries": 0.991,
-        "type": "dragon",
-        "level": 41,
-        "base": "ミニリュー"
-    },
-    "ゲンガーS lv.30": {
-        "ingredients": {
-            "ハーブ": 19.5
-        },
-        "berries": 1.983,
-        "type": "ghost",
-        "level": 30,
-        "base": "ゴース"
-    },
-    "ハガネール lv.30": {
-        "ingredients": {
-            "トマト": 6.8,
-            "肉": 7.3
-        },
-        "berries": 1.861,
-        "type": "steel",
-        "level": 30,
-        "base": "イワーク"
-    },
-    "トゲキッス lv.30": {
-        "ingredients": {
-            "卵": 12.9
-        },
-        "berries": 0.842,
-        "type": "fairy",
-        "level": 30,
-        "base": "トゲピー"
-    },
-    "チルタリス lv.30": {
-        "ingredients": {
-            "卵": 5.2,
-            "大豆": 15.6
-        },
-        "berries": 1.484,
-        "type": "dragon",
-        "level": 30,
-        "base": "チルット"
-    },
-    "ラウドボーン lv.30": {
-        "ingredients": {
-            "リンゴ": 49.1
-        },
-        "berries": 0.705,
-        "type": "ghost",
-        "level": 30,
-        "base": "アチゲータ"
-    },
-    "フシギバナ lv.30": {
-        "ingredients": {
-            "ミツ": 13.4,
-            "トマト": 26.9
-        },
-        "berries": 0.786,
-        "type": "grass",
-        "level": 30,
-        "base": "フシギバナ"
-    },
-    "バタフリー lv.30": {
-        "ingredients": {
-            "ミツ": 5.6,
-            "トマト": 11.1
-        },
-        "berries": 1.541,
-        "type": "bug",
-        "level": 30,
-        "base": "バタフリー"
-    },
-    "ドクロッグ lv.30 AB": {
-        "ingredients": {
-            "オイル": 9.5,
-            "肉": 23.8
-        },
-        "berries": 0.726,
-        "type": "poison",
-        "level": 30,
-        "base": "グレッグル AB"
-    },
-    "ドクロッグ lv.30 AA": {
-        "ingredients": {
-            "オイル": 33.3
-        },
-        "berries": 0.726,
-        "type": "poison",
-        "level": 30,
-        "base": "グレッグル AA"
-    },
-    "アローラキュウコン lv.30": {
-        "ingredients": {
-            "大豆": 17.0
-        },
-        "berries": 1.695,
-        "type": "ice",
-        "level": 30,
-        "base": "アローラキュウコン"
-    },
-    "バンギラス lv.41": {
-        "ingredients": {
-            "ジンジャー": 33.9
-        },
-        "berries": 0.843,
-        "type": "dark",
-        "level": 41,
-        "base": "ヨーギラス"
-    },
-    "ラグラージ lv.30": {
-        "ingredients": {
-            "コーン": 11.1
-        },
-        "berries": 1.769,
-        "type": "earth",
-        "level": 30,
-        "base": "ミズゴロウ"
-    },
-    "クチート lv.30": {
-        "ingredients": {
-            "オイル": 31.5
-        },
-        "berries": 0.821,
-        "type": "steel",
-        "level": 30,
-        "base": "クチート"
-    },
-    "アーボック lv.30": {
-        "ingredients": {
-            "肉": 5.5,
-            "卵": 11.0
-        },
-        "berries": 1.385,
-        "type": "poison",
-        "level": 30,
-        "base": "アーボック"
-    },
-    "キュウコン lv.30": {
-        "ingredients": {
-            "大豆": 13.4
-        },
-        "berries": 1.736,
-        "type": "fire",
-        "level": 30,
-        "base": "ロコン"
-    },
-    "ドードリオ lv.30": {
-        "ingredients": {
-            "大豆": 5.7,
-            "カカオ": 5.7
-        },
-        "berries": 1.703,
-        "type": "bird",
-        "level": 30,
-        "base": "ドードー"
-    },
-    "ガラガラ lv.30": {
-        "ingredients": {
-            "ジンジャー": 13.6
-        },
-        "berries": 1.927,
-        "type": "earth",
-        "level": 30,
-        "base": "カラカラ"
-    },
-    "ホリデーイーブイ lv.30": {
-        "ingredients": {
-            "牛乳": 3.6,
-            "カカオ": 3.6
-        },
-        "berries": 1.524,
-        "type": "normal",
-        "level": 30,
-        "base": "ホリデーイーブイ"
-    },
-    "メガニウム lv.30": {
-        "ingredients": {
-            "カカオ": 4.4,
-            "ミツ": 13.3
-        },
-        "berries": 1.768,
-        "type": "grass",
-        "level": 30,
-        "energy_charge": 2139.67,
-        "base": "ベイリーフ"
-    },
-    "バクフーン lv.30": {
-        "ingredients": {
-            "ジンジャー": 18.4
-        },
-        "berries": 1.782,
-        "type": "fire",
-        "level": 30,
-        "energy_charge": 2924.64,
-        "base": "ヒノアラシ"
-    },
-    "オーダイル lv.30": {
-        "ingredients": {
-            "肉": 19.5
-        },
-        "berries": 1.645,
-        "type": "water",
-        "level": 30,
-        "energy_charge": 2561.715,
-        "base": "ワニノコ"
-    },
-    "ピクシー lv.30": {
-        "ingredients": {
-            "リンゴ": 12.7
-        },
-        "berries": 1.545,
-        "type": "fairy",
-        "level": 30,
-        "base": "ピィ"
-    },
-    "ヘルガー lv.30": {
-        "ingredients": {
-            "ハーブ": 4.3,
-            "ジンジャー": 13.0
-        },
-        "berries": 1.498,
-        "type": "dark",
-        "level": 30,
-        "energy_charge": 2088.46,
-        "base": "デルビル"
-    },
-    "ケッキング lv.30": {
-        "ingredients": {
-            "トマト": 6.7,
-            "ミツ": 13.3
-        },
-        "berries": 1.029,
-        "type": "normal",
-        "level": 30,
-        "base": "ナマケロ"
-    },
-    "トドゼルガ lv.33": {
-        "ingredients": {
-            "オイル": 5.3,
-            "肉": 15.8
-        },
-        "berries": 1.657,
-        "type": "ice",
-        "level": 33,
-        "base": "タマザラシ"
-    },
-    "ヌオー lv.30": {
-        "ingredients": {
-            "キノコ": 27.7
-        },
-        "berries": 0.739,
-        "type": "water",
-        "level": 30,
-        "heal_self": 0.84375,
-        "base": "ヌオー"
-    },
-    "ムシャーナ lv.30": {
-        "ingredients": {
-            "牛乳": 14.2
-        },
-        "berries": 1.508,
-        "type": "esper",
-        "level": 30,
-        "base": "ムシャーナ"
-    },
-    "ムシャーナS lv.30": {
-        "ingredients": {
-            "牛乳": 4.7,
-            "ミツ": 9.5
-        },
-        "berries": 2.262,
-        "type": "esper",
-        "level": 30,
-        "base": "ムンナS"
-    },
-    "クワガノン lv.30": {
-        "ingredients": {
-            "コーヒー": 9.8,
-            "キノコ": 19.5
-        },
-        "berries": 0.691,
-        "type": "bug",
+        "base_support_time": 2800,
+        "food_p": 0.266,
+        "skill_p": 0.021,
         "level": 30
     },
-    "エルレイド lv.30": {
+    "フシギバナAB lv.30": {
         "ingredients": {
-            "リンゴ": 4.3,
-            "コーン": 4.3
+            "ミツ": 2,
+            "イモ": 5
         },
-        "berries": 1.919,
-        "type": "esper",
-        "level": 30,
-        "base": "エルレイド"
+        "class": "food",
+        "type": "grass",
+        "base_support_time": 2800,
+        "food_p": 0.266,
+        "skill_p": 0.021,
+        "level": 30
     },
-    "クレセリア lv.30": {
+    "リザードンAA lv.30": {
         "ingredients": {
-            "ジンジャー": 7.3,
-            "カカオ": 14.7
+            "肉": 3.5
         },
-        "berries": 0.860,
-        "type": "esper",
-        "level": 30,
-        "heal_all": 0.395,
-        "base": "クレセリア"
+        "class": "food",
+        "type": "fire",
+        "base_support_time": 2400,
+        "food_p": 0.224,
+        "skill_p": 0.016,
+        "level": 30
     },
-    "ヘラクロス lv.30": {
+    "カメックスAA lv.30": {
         "ingredients": {
-            "ミツ": 14.6
+            "牛乳": 3.5
         },
-        "berries": 0.878,
+        "class": "food",
+        "type": "water",
+        "base_support_time": 2800,
+        "food_p": 0.275,
+        "skill_p": 0.021,
+        "level": 30
+    },
+    "カメックスAB lv.30": {
+        "ingredients": {
+            "牛乳": 2,
+            "カカオ": 3
+        },
+        "class": "food",
+        "type": "water",
+        "base_support_time": 2800,
+        "food_p": 0.275,
+        "skill_p": 0.021,
+        "level": 30
+    },
+    "ダグトリオAA lv.30": {
+        "ingredients": {
+            "トマト": 3.5
+        },
+        "class": "food",
+        "type": "earth",
+        "base_support_time": 2650,
+        "food_p": 0.190,
+        "skill_p": 0.020,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 569
+        }
+    },
+    "ダグトリオAB lv.30": {
+        "ingredients": {
+            "トマト": 2,
+            "ネギ": 3
+        },
+        "class": "food",
+        "type": "earth",
+        "base_support_time": 2650,
+        "food_p": 0.190,
+        "skill_p": 0.020,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 569
+        }
+    },
+    "ウツボットAB lv.30": {
+        "ingredients": {
+            "トマト": 2,
+            "イモ": 4
+        },
+        "class": "food",
+        "type": "grass",
+        "base_support_time": 2800,
+        "food_p": 0.233,
+        "skill_p": 0.039,
+        "level": 30,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 21
+        }
+    },
+    "ゴローニャAA lv.30": {
+        "ingredients": {
+            "大豆": 3.5
+        },
+        "class": "food",
+        "type": "rock",
+        "base_support_time": 3100,
+        "food_p": 0.280,
+        "skill_p": 0.052,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 500
+        }
+    },
+    "ゴローニャAB lv.30": {
+        "ingredients": {
+            "大豆": 2,
+            "イモ": 4
+        },
+        "class": "food",
+        "type": "rock",
+        "base_support_time": 3100,
+        "food_p": 0.280,
+        "skill_p": 0.052,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 500
+        }
+    },
+    "カモネギAA lv.30": {
+        "ingredients": {
+            "ネギ": 3.5
+        },
+        "class": "food",
+        "type": "bird",
+        "base_support_time": 3000,
+        "food_p": 0.160,
+        "skill_p": 0.043,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 400
+        }
+    },
+    "カモネギAB lv.30": {
+        "ingredients": {
+            "ネギ": 2,
+            "肉": 8
+        },
+        "class": "food",
+        "type": "bird",
+        "base_support_time": 3000,
+        "food_p": 0.160,
+        "skill_p": 0.043,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 400
+        }
+    },
+    "ゲンガーAA lv.30": {
+        "ingredients": {
+            "ハーブ": 3.5
+        },
+        "class": "food",
+        "type": "ghost",
+        "base_support_time": 2200,
+        "food_p": 0.161,
+        "skill_p": 0.024,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 981.5
+        }
+    },
+    "ガルーラAA lv.30": {
+        "ingredients": {
+            "ジンジャー": 3.5
+        },
+        "class": "food",
+        "type": "normal",
+        "base_support_time": 2650,
+        "food_p": 0.222,
+        "skill_p": 0.017,
+        "level": 30
+    },
+    "ガルーラAB lv.30": {
+        "ingredients": {
+            "ジンジャー": 2,
+            "イモ": 4
+        },
+        "class": "food",
+        "type": "normal",
+        "base_support_time": 2650,
+        "food_p": 0.222,
+        "skill_p": 0.017,
+        "level": 30
+    },
+    "バリヤードAA lv.30": {
+        "ingredients": {
+            "トマト": 3.5
+        },
+        "class": "food",
+        "type": "esper",
+        "base_support_time": 2800,
+        "food_p": 0.216,
+        "skill_p": 0.039,
+        "level": 30
+    },
+    "バリヤードAB lv.30": {
+        "ingredients": {
+            "トマト": 2,
+            "イモ": 4
+        },
+        "class": "food",
+        "type": "esper",
+        "base_support_time": 2800,
+        "food_p": 0.216,
+        "skill_p": 0.039,
+        "level": 30
+    },
+    "カイロスAA lv.30": {
+        "ingredients": {
+            "ミツ": 3.5
+        },
+        "class": "food",
         "type": "bug",
+        "base_support_time": 2400,
+        "food_p": 0.216,
+        "skill_p": 0.031,
         "level": 30,
-        "base": "ヘラクロス"
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 880
+        }
     },
     "メタモンAA lv.30": {
         "ingredients": {
-            "オイル": 28.4
+            "オイル": 3.5
         },
-        "berries": 0.639,
+        "class": "food",
         "type": "normal",
-        "level": 30,
-        "base": "メタモン"
+        "base_support_time": 3500,
+        "food_p": 0.201,
+        "skill_p": 0.036,
+        "level": 30
     },
     "メタモンAB lv.30": {
         "ingredients": {
-            "オイル": 8.1,
-            "ネギ": 12.2
+            "オイル": 2,
+            "ネギ": 3
         },
-        "berries": 0.639,
+        "class": "food",
         "type": "normal",
-        "level": 30,
-        "base": "メタモン"
+        "base_support_time": 3500,
+        "food_p": 0.201,
+        "skill_p": 0.036,
+        "level": 30
     },
-    "ハピナス lv.30": {
+    "カイリューAA lv.41": {
         "ingredients": {
-            "卵": 38.0
+            "ハーブ": 3.5
         },
-        "berries": 0.688,
-        "type": "normal",
-        "level": 30,
-        "base": "ピンプク"
+        "class": "food",
+        "type": "dragon",
+        "base_support_time": 2600,
+        "food_p": 0.264,
+        "skill_p": 0.026,
+        "level": 41,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 21
+        }
     },
-    "ミカルゲ lv.30": {
+    "ヌオーAA lv.30": {
         "ingredients": {
-            "キノコ": 28.0
+            "キノコ": 3.5
         },
-        "berries": 0.711,
-        "type": "dark",
+        "class": "food",
+        "type": "water",
+        "base_support_time": 3400,
+        "food_p": 0.190,
+        "skill_p": 0.032,
         "level": 30,
-        "base": "ミカルゲ"
+        "mainskill": {
+            "name": "heal_self",
+            "value": 16
+        }
     },
-    "ドンカラス lv.30": {
+    "ヌオーAB lv.30": {
         "ingredients": {
-            "コーヒー": 9.5
+            "キノコ": 2,
+            "イモ": 6
         },
-        "berries": 0.830,
-        "type": "dark",
+        "class": "food",
+        "type": "water",
+        "base_support_time": 3400,
+        "food_p": 0.190,
+        "skill_p": 0.032,
         "level": 30,
-        "base": "ヤミカラス"
+        "mainskill": {
+            "name": "heal_self",
+            "value": 16
+        }
     },
-    "ジュカイン lv.30": {
+    "デリバードAA lv.30": {
         "ingredients": {
-            "卵": 6.2
+            "卵": 3.5
         },
-        "berries": 1.164,
-        "type": "grass",
-        "level": 30,
-        "berry_burst": 48.96,
-        "base": "ジュカイン"
-    },
-    "カモネギ lv.30": {
-        "ingredients": {
-            "ネギ": 14.2
-        },
-        "berries": 0.672,
+        "class": "food",
         "type": "bird",
-        "level": 30,
-        "base": "カモネギ"
+        "base_support_time": 2500,
+        "food_p": 0.188,
+        "skill_p": 0.030,
+        "level": 30
     },
-    "キュワワー lv.30": {
+    "デリバードAB lv.30": {
         "ingredients": {
-            "コーン": 17.8
+            "卵": 2,
+            "リンゴ": 6
         },
-        "berries": 0.866,
-        "type": "fairy",
+        "class": "food",
+        "type": "bird",
+        "base_support_time": 2500,
+        "food_p": 0.188,
+        "skill_p": 0.030,
+        "level": 30
+    },
+    "ハピナスAA lv.30": {
+        "ingredients": {
+            "卵": 3.5
+        },
+        "class": "food",
+        "type": "normal",
+        "base_support_time": 3100,
+        "food_p": 0.238,
+        "skill_p": 0.023,
         "level": 30,
-        "base": "キュワワー"
+        "mainskill": {
+            "name": "heal_all",
+            "value": 9
+        }
+    },
+    "ハピナスAB lv.30": {
+        "ingredients": {
+            "卵": 2,
+            "イモ": 4
+        },
+        "class": "food",
+        "type": "normal",
+        "base_support_time": 3100,
+        "food_p": 0.236,
+        "skill_p": 0.023,
+        "level": 30,
+        "mainskill": {
+            "name": "heal_all",
+            "value": 9
+        }
+    },
+    "バンギラスAA lv.41": {
+        "ingredients": {
+            "ジンジャー": 3.5
+        },
+        "class": "food",
+        "type": "rock",
+        "base_support_time": 2700,
+        "food_p": 0.266,
+        "skill_p": 0.052,
+        "level": 41,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 21
+        }
+    },
+    "バンギラスAB lv.30": {
+        "ingredients": {
+            "ジンジャー": 2,
+            "大豆": 5
+        },
+        "class": "food",
+        "type": "rock",
+        "base_support_time": 2700,
+        "food_p": 0.266,
+        "skill_p": 0.052,
+        "level": 41,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 21
+        }
+    },
+    "クチートAA lv.30": {
+        "ingredients": {
+            "オイル": 3.5
+        },
+        "class": "food",
+        "type": "steel",
+        "base_support_time": 3200,
+        "food_p": 0.204,
+        "skill_p": 0.038,
+        "level": 30
+    },
+    "クチートAB lv.30": {
+        "ingredients": {
+            "オイル": 2,
+            "コーン": 4
+        },
+        "class": "food",
+        "type": "steel",
+        "base_support_time": 3200,
+        "food_p": 0.204,
+        "skill_p": 0.038,
+        "level": 30
+    },
+    "ボスゴドラAA lv.32": {
+        "ingredients": {
+            "肉": 3.5
+        },
+        "class": "food",
+        "type": "steel",
+        "base_support_time": 3000,
+        "food_p": 0.285,
+        "skill_p": 0.052,
+        "level": 32,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 21
+        }
+    },
+    "ボスゴドラAB lv.32": {
+        "ingredients": {
+            "肉": 2,
+            "コーヒー": 3
+        },
+        "class": "food",
+        "type": "steel",
+        "base_support_time": 3000,
+        "food_p": 0.285,
+        "skill_p": 0.052,
+        "level": 32,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 21
+        }
+    },
+    "フライゴンAA lv.34": {
+        "ingredients": {
+            "アボカド": 3.5
+        },
+        "class": "food",
+        "type": "earth",
+        "base_support_time": 2700,
+        "food_p": 0.172,
+        "skill_p": 0.039,
+        "level": 34,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 785
+        }
+    },
+    "フライゴンAB lv.34": {
+        "ingredients": {
+            "アボカド": 2,
+            "ハーブ": 6
+        },
+        "class": "food",
+        "type": "earth",
+        "base_support_time": 2700,
+        "food_p": 0.172,
+        "skill_p": 0.039,
+        "level": 34,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 785
+        }
+    },
+    "アブソルAA lv.30": {
+        "ingredients": {
+            "カカオ": 3.5
+        },
+        "class": "food",
+        "type": "dark",
+        "base_support_time": 2950,
+        "food_p": 0.178,
+        "skill_p": 0.038,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 400
+        }
+    },
+    "アブソルAB lv.30": {
+        "ingredients": {
+            "カカオ": 2,
+            "リンゴ": 5
+        },
+        "class": "food",
+        "type": "dark",
+        "base_support_time": 2950,
+        "food_p": 0.178,
+        "skill_p": 0.038,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 400
+        }
+    },
+    "レントラーAA lv.30": {
+        "ingredients": {
+            "トマト": 3.5
+        },
+        "class": "food",
+        "type": "electric",
+        "base_support_time": 2400,
+        "food_p": 0.200,
+        "skill_p": 0.023,
+        "level": 30
+    },
+    "レントラーAB lv.30": {
+        "ingredients": {
+            "トマト": 2,
+            "オイル": 5
+        },
+        "class": "food",
+        "type": "electric",
+        "base_support_time": 2400,
+        "food_p": 0.200,
+        "skill_p": 0.023,
+        "level": 30
+    },
+    "ミカルゲAA lv.30": {
+        "ingredients": {
+            "キノコ": 3.5
+        },
+        "class": "food",
+        "type": "dark",
+        "base_support_time": 3500,
+        "food_p": 0.198,
+        "skill_p": 0.036,
+        "level": 30
+    },
+    "ミカルゲAB lv.30": {
+        "ingredients": {
+            "キノコ": 2,
+            "カボチャ": 3
+        },
+        "class": "food",
+        "type": "dark",
+        "base_support_time": 3500,
+        "food_p": 0.198,
+        "skill_p": 0.036,
+        "level": 30
+    },
+    "ドクロッグAA lv.30": {
+        "ingredients": {
+            "オイル": 3.5
+        },
+        "class": "food",
+        "type": "poison",
+        "base_support_time": 3400,
+        "food_p": 0.229,
+        "skill_p": 0.043,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 569
+        }
+    },
+    "ユキノオーAA lv.30": {
+        "ingredients": {
+            "トマト": 3.5
+        },
+        "class": "food",
+        "type": "ice",
+        "base_support_time": 3000,
+        "food_p": 0.250,
+        "skill_p": 0.044,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 711.5
+        }
+    },
+    "ユキノオーAB lv.30": {
+        "ingredients": {
+            "トマト": 2,
+            "卵": 4
+        },
+        "class": "food",
+        "type": "ice",
+        "base_support_time": 3000,
+        "food_p": 0.250,
+        "skill_p": 0.044,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 711.5
+        }
+    },
+    "パンプジンAB lv.30": {
+        "ingredients": {
+            "カボチャ": 2,
+            "大豆": 11
+        },
+        "class": "food",
+        "type": "ghost",
+        "base_support_time": 3300,
+        "food_p": 0.130,
+        "skill_p": 0.049,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 569
+        }
+    },
+    "クワガノンAA lv.30": {
+        "ingredients": {
+            "コーヒー": 3.5
+        },
+        "class": "food",
+        "type": "bug",
+        "base_support_time": 2800,
+        "food_p": 0.194,
+        "skill_p": 0.051,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 785
+        }
+    },
+    "クワガノンAB lv.30": {
+        "ingredients": {
+            "コーヒー": 2,
+            "キノコ": 4
+        },
+        "class": "food",
+        "type": "bug",
+        "base_support_time": 2800,
+        "food_p": 0.194,
+        "skill_p": 0.051,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 785
+        }
+    },
+    "アブリボンAA lv.30": {
+        "ingredients": {
+            "ミツ": 3.5
+        },
+        "class": "food",
+        "type": "fairy",
+        "base_support_time": 2300,
+        "food_p": 0.194,
+        "skill_p": 0.025,
+        "level": 30
+    },
+    "アブリボンAB lv.30": {
+        "ingredients": {
+            "ミツ": 2,
+            "オイル": 4
+        },
+        "class": "food",
+        "type": "fairy",
+        "base_support_time": 2300,
+        "food_p": 0.194,
+        "skill_p": 0.025,
+        "level": 30
+    },
+    "キテルグマAA lv.30": {
+        "ingredients": {
+            "コーン": 3.5
+        },
+        "class": "food",
+        "type": "fight",
+        "base_support_time": 2800,
+        "food_p": 0.229,
+        "skill_p": 0.013,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 711.5
+        }
+    },
+    "キテルグマAB lv.30": {
+        "ingredients": {
+            "コーン": 2,
+            "肉": 6
+        },
+        "class": "food",
+        "type": "fight",
+        "base_support_time": 2800,
+        "food_p": 0.229,
+        "skill_p": 0.013,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 711.5
+        }
+    },
+    "キュワワーAA lv.30": {
+        "ingredients": {
+            "コーン": 3.5
+        },
+        "class": "food",
+        "type": "fairy",
+        "base_support_time": 2500,
+        "food_p": 0.167,
+        "skill_p": 0.035,
+        "level": 30,
+        "mainskill": {
+            "name": "heal_yell",
+            "value": 12
+        }
+    },
+    "キュワワーAB lv.30": {
+        "ingredients": {
+            "コーン": 2,
+            "ジンジャー": 6
+        },
+        "class": "food",
+        "type": "fairy",
+        "base_support_time": 2500,
+        "food_p": 0.167,
+        "skill_p": 0.035,
+        "level": 30,
+        "mainskill": {
+            "name": "heal_yell",
+            "value": 12
+        }
+    },
+    "ウッウAA lv.30": {
+        "ingredients": {
+            "オイル": 3.5
+        },
+        "class": "food",
+        "type": "bird",
+        "base_support_time": 2700,
+        "food_p": 0.165,
+        "skill_p": 0.039,
+        "level": 30
+    },
+    "マスカーニャAA lv.30": {
+        "ingredients": {
+            "イモ": 3.5
+        },
+        "class": "food",
+        "type": "dark",
+        "base_support_time": 2600,
+        "food_p": 0.190,
+        "skill_p": 0.022,
+        "level": 30
+    },
+    "ラウドボーンAA lv.30": {
+        "ingredients": {
+            "リンゴ": 3.5
+        },
+        "class": "food",
+        "type": "ghost",
+        "base_support_time": 2700,
+        "food_p": 0.268,
+        "skill_p": 0.062,
+        "level": 30,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 21
+        }
+    },
+    "ラウドボーンAB lv.30": {
+        "ingredients": {
+            "リンゴ": 2,
+            "肉": 4
+        },
+        "class": "food",
+        "type": "ghost",
+        "base_support_time": 2700,
+        "food_p": 0.268,
+        "skill_p": 0.062,
+        "level": 30,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 21
+        }
+    },
+    "ウェーニバルAA lv.30": {
+        "ingredients": {
+            "大豆": 3.5
+        },
+        "class": "food",
+        "type": "fight",
+        "base_support_time": 2600,
+        "food_p": 0.232,
+        "skill_p": 0.024,
+        "level": 30,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 1726
+        }
+    },
+    "ハルクジラAA lv.30": {
+        "ingredients": {
+            "イモ": 3.5
+        },
+        "class": "food",
+        "type": "ice",
+        "base_support_time": 2800,
+        "food_p": 0.209,
+        "skill_p": 0.042,
+        "level": 30,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 16
+        }
+    },
+    "ハルクジラAB lv.30": {
+        "ingredients": {
+            "イモ": 2,
+            "肉": 5
+        },
+        "class": "food",
+        "type": "ice",
+        "base_support_time": 2800,
+        "food_p": 0.209,
+        "skill_p": 0.042,
+        "level": 30,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 16
+        }
+    },
+    "ドオーAA lv.30": {
+        "ingredients": {
+            "カカオ": 3.5
+        },
+        "class": "food",
+        "type": "poison",
+        "base_support_time": 3500,
+        "food_p": 0.208,
+        "skill_p": 0.055,
+        "level": 30,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 16
+        }
+    },
+    "ドオーAB lv.30": {
+        "ingredients": {
+            "カカオ": 2,
+            "コーヒー": 4
+        },
+        "class": "food",
+        "type": "poison",
+        "base_support_time": 3500,
+        "food_p": 0.208,
+        "skill_p": 0.055,
+        "level": 30,
+        "mainskill": {
+            "name": "heal_self",
+            "value": 16
+        }
+    },
+    "ボーマンダAA lv.38": {
+        "ingredients": {
+            "イモ": 1.5
+        },
+        "class": "berry",
+        "type": "dragon",
+        "base_support_time": 2800,
+        "food_p": 0.217,
+        "skill_p": 0.034,
+        "level": 38
+    },
+    "ボーマンダAB lv.38": {
+        "ingredients": {
+            "イモ": 1,
+            "ジンジャー": 3
+        },
+        "class": "berry",
+        "type": "dragon",
+        "base_support_time": 2800,
+        "food_p": 0.217,
+        "skill_p": 0.034,
+        "level": 38
     }
 }
