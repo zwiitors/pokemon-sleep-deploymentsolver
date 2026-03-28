@@ -542,28 +542,29 @@ class PokemonDeploymentSolver:
                 )
 
         # 料理によるエナジーの合計を最大化
-        self.total_energy = sum(
+        self.dish_energy = sum(
             self.cooked_dishes[(dish, t)] * self.dishes[dish]["energy"]
             for dish in self.dishes
             for t in self.cook_time
         )
-        self.total_energy += sum(
+        self.dish_energy += sum(
             self.ingredients_additionals[(ingredient, t)] * self.ingredients[ingredient]
             for ingredient in self.ingredients
             for t in self.cook_time
         )
 
-        self.total_energy += sum(
+        self.berry_energy = sum(
             self.pokemon_active[(p, d)] * self.pokemon_data[p]["berries"] * 24
             for p in self.pokemon_data
             for d in range(self.today, self.days)
         )
 
-        self.total_energy += sum(
+        self.skill_energy += sum(
             (self.pokemon_active[(p, d)] * self.pokemon_data[p].get("energy_charge", 0))
             for p in self.pokemon_data
             for d in range(self.today, self.days)
         )
+        self.total_energy = self.dish_energy + self.berry_energy + self.skill_energy
         self.model.Maximize(self.total_energy)
 
     def solve(self):
@@ -580,6 +581,10 @@ class PokemonDeploymentSolver:
                 st.success(
                     f"実行可能解を発見しました。獲得エナジー: {self.solver.Value(self.total_energy)}"
                 )
+            st.subheader("エナジー内訳")
+            st.text(f"料理エナジー: {self.solver.Value(self.dish_energy)}")
+            st.text(f"きのみエナジー: {self.solver.Value(self.berry_energy)}")
+            st.text(f"スキルエナジー: {self.solver.Value(self.skill_energy)}")
             st.subheader("日ごとの編成")
             for d in range(self.today, self.days):
                 active_pokemon = [
