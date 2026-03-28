@@ -63,6 +63,8 @@ class PokemonDeploymentSolver:
             self.dish_energy_multiplier *= 1.25
         # 初期在庫
         self.initial_stock = user_inputs["stock"]
+        if user_inputs["ing_no_limit"]:
+            self.initial_stock = {k: float("inf") for k in self.initial_stock.keys()}
         self.final_stock = {
             "キノコ": 0,
             "卵": 0,
@@ -79,7 +81,7 @@ class PokemonDeploymentSolver:
             "大豆": 0,
             "コーヒー": 0,
         }
-        self.storage_limit = 999  # 食材の最大所持量
+        self.storage_limit = float("inf")  # 食材の最大所持量
         # ポケモンリストと収集能力 (1時間あたりに修正)
         # with open("pokemon_data.json", encoding="utf-8_sig") as f:
         #     self.pokemon_data = json.load(f)
@@ -712,6 +714,7 @@ with st.sidebar:
     consider_dish_level = st.checkbox("料理レベル", value=True)
     use_seed_pokemon = st.checkbox("未進化ポケモン")
     event_cook_week = st.checkbox("料理ウィーク")
+    ingredient_no_limit = st.checkbox("食材無制限")
     future_pokemon = st.number_input("育成枠", min_value=0, step=1)
 
 # 計算実行ボタン
@@ -726,6 +729,7 @@ if st.button("計算開始"):
         "level": consider_dish_level,
         "seed": use_seed_pokemon,
         "cook": event_cook_week,
+        "ing_no_limit": ingredient_no_limit,
         "future": future_pokemon,
     }
 
