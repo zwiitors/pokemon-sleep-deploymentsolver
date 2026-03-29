@@ -58,6 +58,7 @@ class PokemonDeploymentSolver:
         self.use_seed_pokemon = user_inputs["seed"]
         self.dish_energy_multiplier = 1.0
         self.skill_energy_multiplier = 1.0
+        self.solver.parameters.relative_gap_limit = 0.005
         if user_inputs["cook"]:
             self.pot_capacity *= 2
             self.dish_energy_multiplier *= 1.25
@@ -574,17 +575,6 @@ class PokemonDeploymentSolver:
         self.add_constraints()
         self.solver.parameters.num_workers = 1  # CPUコア数に合わせて調整
         self.solver.parameters.log_search_progress = False
-        self.solver.parameters.relative_gap_limit = 0.005
-        pokemon_vars = [
-            self.pokemon_active[(p, d)]
-            for p in self.pokemon_data
-            for d in range(self.today, self.days)
-        ]
-
-        # ポケモンの採用(1)を優先して探索させる
-        self.model.AddDecisionStrategy(
-            pokemon_vars, cp_model.CHOOSE_FIRST_UNBOUND, cp_model.SELECT_MAX_VALUE
-        )
         status = self.solver.Solve(self.model)
         if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
             if status == cp_model.OPTIMAL:
