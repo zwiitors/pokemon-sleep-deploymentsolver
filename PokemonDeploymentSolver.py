@@ -31,6 +31,37 @@ class PokemonDeploymentSolver:
         "steel": 33,
     }
 
+    # メインスキルのスキルレベル別効果量（Lv1〜最大）
+    # データ側の mainskill.value からスキルレベルを逆引きするために使う
+    SKILL_LEVEL_TABLES = {
+        "energy_charge": [
+            # エナジーチャージS
+            [400, 569, 785, 1083, 1496, 2066, 3212],
+            # エナジーチャージS(ランダム)（最小値と最大値の平均）
+            [500, 711.5, 981.5, 1354, 1870, 2582.5, 4015],
+        ],
+        "heal_self": [[12, 16, 21, 26, 33, 43]],  # げんきチャージS
+        "heal_yell": [[12, 15, 20, 25, 33, 44]],  # げんきエールS
+        "heal_all": [[5, 7, 9, 11, 15, 18]],  # げんきオールS
+        "dish_power": [[7, 10, 12, 17, 22, 27, 31]],  # 料理パワーアップS
+    }
+
+    # ハロウィンイベント（2026/10/26〜11/1）の効果
+    HALLOWEEN_TYPE = "ghost"  # 対象タイプ（ゴースト）
+    HALLOWEEN_INGREDIENT_BONUS = 1  # 通常のおてつだいで食材を拾った場合 食材+1個
+    HALLOWEEN_SKILL_RATE_MULTIPLIER = 1.25  # メインスキル発生確率1.25倍
+    HALLOWEEN_SKILL_LEVEL_BONUS = 3  # メインスキル発動時にスキルレベル+3
+
+    @classmethod
+    def boost_skill_level(cls, skill_name, value, bonus):
+        """効果量 value からスキルレベルを逆引きし、bonus だけ上げた効果量を返す。
+        最大レベルを超える分は最大レベルで頭打ち。逆引きできなければ None。"""
+        for table in cls.SKILL_LEVEL_TABLES.get(skill_name, []):
+            for i, v in enumerate(table):
+                if abs(v - value) < 1e-6:
+                    return table[min(i + bonus, len(table) - 1)]
+        return None
+
     def __init__(self, user_inputs):
         # self.model = cp_model.CpModel()
         self.solver: pywraplp.Solver = pywraplp.Solver.CreateSolver("SAT")
@@ -65,6 +96,9 @@ class PokemonDeploymentSolver:
         if user_inputs["cook"]:
             self.pot_capacity *= 2
             self.dish_energy_multiplier *= 1.25
+        # ハロウィンイベント: ゴーストタイプの食材+1・スキル確率1.25倍・スキルLv+3
+        # （ブリーのみ固定は UI 側で好きなきのみに反映済み）
+        self.halloween_event = user_inputs.get("halloween", False)
         # 初期在庫
         self.initial_stock = user_inputs["stock"]
         if user_inputs["ing_no_limit"]:
@@ -89,12 +123,17 @@ class PokemonDeploymentSolver:
         # ポケモンリストと収集能力 (1時間あたりに修正)
         # with open("pokemon_data.json", encoding="utf-8_sig") as f:
         #     self.pokemon_data = json.load(f)
-        self.pokemon_data = self.load_data("pokemon_data_new_test.json")
+        self.pokemon_data = self.load_data(
+            "pokemon_data_new_test.json", halloween=self.halloween_event
+        )
 
+        # 未進化ポケモンは計算済みの値を直接持つため、イベント効果は反映しない
         with open("seed_pokemon_data.json", encoding="utf-8_sig") as f:
             self.seed_pokemon = json.load(f)
 
-        self.future_pokemon = self.load_data("future_pokemon_data.json")
+        self.future_pokemon = self.load_data(
+            "future_pokemon_data.json", halloween=self.halloween_event
+        )
 
         self.pokemon_data = {
             **self.pokemon_data,
@@ -317,11 +356,12 @@ class PokemonDeploymentSolver:
             )
 
     @classmethod
-    def load_data(cls, filename):
+    def load_data(cls, filename, halloween=False):
         with open(filename, encoding="utf-8_sig") as f:
             pokemon_data = json.load(f)
         support_const = 132888
         for p, d in pokemon_data.items():
+            is_halloween_target = halloween and d["type"] == cls.HALLOWEEN_TYPE
             num_berries = 1
             if "subskill" not in d:
                 d["subskill"] = []
@@ -368,13 +408,31 @@ class PokemonDeploymentSolver:
                 skill_p *= 1.2
             elif d["personality"]["down"] == "skill":
                 skill_p *= 0.8
+            ingredient_bonus = 0
+            skill_value = d["mainskill"]["value"] if "mainskill" in d else 0
+            if is_halloween_target:
+                ingredient_bonus = cls.HALLOWEEN_INGREDIENT_BONUS
+                skill_p *= cls.HALLOWEEN_SKILL_RATE_MULTIPLIER
+                if "mainskill" in d:
+                    boosted = cls.boost_skill_level(
+                        d["mainskill"]["name"],
+                        skill_value,
+                        cls.HALLOWEEN_SKILL_LEVEL_BONUS,
+                    )
+                    if boosted is None:
+                        st.warning(
+                            f"{p}: メインスキル {d['mainskill']['name']}={skill_value} の"
+                            "スキルレベルを特定できないため、スキルLv+3は反映していません。"
+                        )
+                    else:
+                        skill_value = boosted
             pokemon_data[p]["ingredients"] = {
-                k: v * sup_num * food_p / len(d["ingredients"])
+                k: (v + ingredient_bonus) * sup_num * food_p / len(d["ingredients"])
                 for k, v in pokemon_data[p]["ingredients"].items()
             }
             if "mainskill" in d:
                 pokemon_data[p][d["mainskill"]["name"]] = (
-                    d["mainskill"]["value"] * sup_num * skill_p
+                    skill_value * sup_num * skill_p
                 )
             pokemon_data[p]["berries"] = (
                 cls.BERRIES[d["type"]]
@@ -670,6 +728,12 @@ with st.sidebar:
     )
     today_int = day_mapping[selected_day]
     days_int = day_mapping[max_day[0]] + 1
+    event_halloween = st.checkbox(
+        "ハロウィンイベント",
+        help="ゴーストタイプ: 食材+1個 / メインスキル発生確率1.25倍 / スキルLv+3。"
+        "好きなきのみの1種類がブリーのみ(ゴースト)で固定されます。"
+        "未進化ポケモンには反映されません。",
+    )
     berries_liked = [0, 0, 0]
     berries = {
         "ほのお": "fire",
@@ -692,9 +756,18 @@ with st.sidebar:
         "はがね": "steel",
     }
     for i in range(3):
-        berries_liked[i] = st.selectbox(
-            f"カビゴンの好きなきのみ{(i + 1)}", list(berries.keys())
-        )
+        if event_halloween and i == 0:
+            # ハロウィンイベント中は1種類がブリーのみ(ゴースト)で固定
+            berries_liked[i] = st.selectbox(
+                f"カビゴンの好きなきのみ{(i + 1)}",
+                ["ゴースト"],
+                disabled=True,
+                key="berry_liked_halloween",
+            )
+        else:
+            berries_liked[i] = st.selectbox(
+                f"カビゴンの好きなきのみ{(i + 1)}", list(berries.keys())
+            )
     berries_liked = [berries[k] for k in berries_liked]
 
     dish_type = st.selectbox("料理タイプ", ["カレー", "サラダ", "デザート"])
@@ -745,6 +818,7 @@ if st.button("計算開始"):
         "level": consider_dish_level,
         "seed": use_seed_pokemon,
         "cook": event_cook_week,
+        "halloween": event_halloween,
         "ing_no_limit": ingredient_no_limit,
         "future": future_pokemon,
     }
