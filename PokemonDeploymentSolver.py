@@ -715,6 +715,85 @@ class PokemonDeploymentSolver:
             st.error("解が見つかりませんでした。")
 
 
+def bag_screenshot_reader(stock_names):
+    """バッグ（食材）画面のスクリーンショットから食材在庫を読み取って入力欄に反映する。"""
+    import bag_reader
+
+    with st.expander("📷 スクショから在庫を読み取る"):
+        files = st.file_uploader(
+            "バッグ > 食材（表示順: デフォルト）の画面",
+            type=["png", "jpg", "jpeg"],
+            accept_multiple_files=True,
+            help="1画面に収まらない場合は、スクロールして撮った画像もまとめて選んでください。",
+        )
+        if files and st.button("読み取る"):
+            try:
+                st.session_state["bag_result"] = bag_reader.read_bag(
+                    [f.getvalue() for f in files]
+                )
+            except ValueError as e:
+                st.error(str(e))
+                st.session_state.pop("bag_result", None)
+
+        result = st.session_state.get("bag_result")
+        if result is None:
+            return
+
+        rows = [
+            {"食材": name, "個数": result.counts[name], "判定": "読み取り"}
+            for name in bag_reader.DEFAULT_ORDER
+            if name in result.counts
+        ]
+        rows += [{"食材": n, "個数": 0, "判定": "表示なし→0"} for n in result.zero]
+        st.dataframe(rows, hide_index=True, width="stretch")
+
+        for cell in result.low_confidence:
+            st.warning(f"{cell.ingredient}: 読み取りの確からしさが低いので確認してください。")
+        for name, values in result.conflicts.items():
+            st.warning(f"{name}: 画像によって値が違います {values}（多い方を採用）")
+        for message in result.order_warnings:
+            st.warning(message)
+
+        # アイコンを判定できなかったマスは手動で食材を選んでもらう
+        manual = {}
+        if result.unknown_cells:
+            st.info("判定できなかった食材があります。食材を選んでください。")
+        for i, cell in enumerate(result.unknown_cells):
+            col_img, col_input = st.columns([1, 2])
+            col_img.image(cell.icon_image)
+            name = col_input.selectbox(
+                "食材", ["（無視）"] + list(stock_names), key=f"bag_unknown_name_{i}"
+            )
+            count = col_input.number_input(
+                "個数",
+                min_value=0,
+                step=1,
+                value=cell.count or 0,
+                key=f"bag_unknown_count_{i}",
+            )
+            if name != "（無視）":
+                manual[name] = count
+
+        unconfirmed = [n for n in result.unconfirmed if n not in manual]
+        zero_unconfirmed = False
+        if unconfirmed:
+            zero_unconfirmed = st.checkbox(
+                f"画面外の可能性がある食材（{'、'.join(unconfirmed)}）も0にする",
+                help="OFFのときは今の入力値のまま残します。",
+            )
+
+        def apply():
+            values = {**result.counts, **{n: 0 for n in result.zero}, **manual}
+            if zero_unconfirmed:
+                values.update({n: 0 for n in unconfirmed})
+            for name, value in values.items():
+                if name in stock_names:
+                    st.session_state[f"stock_{name}"] = int(value)
+            st.session_state.pop("bag_result", None)
+
+        st.button("在庫に反映", on_click=apply, type="primary")
+
+
 # --- メイン処理（UI部分） ---
 st.title("Pokemon Sleep 最適編成ソルバー")
 
@@ -798,7 +877,14 @@ with st.sidebar:
     }
 
     for ing, val in default_stock.items():
-        input_stock[ing] = st.number_input(f"{ing}", value=val, min_value=0, step=1)
+        st.session_state.setdefault(f"stock_{ing}", val)
+
+    bag_screenshot_reader(list(default_stock.keys()))
+
+    for ing in default_stock:
+        input_stock[ing] = st.number_input(
+            f"{ing}", min_value=0, step=1, key=f"stock_{ing}"
+        )
     use_additional_ingredient = st.checkbox("追加食材")
     consider_dish_level = st.checkbox("料理レベル", value=True)
     use_seed_pokemon = st.checkbox("未進化ポケモン")

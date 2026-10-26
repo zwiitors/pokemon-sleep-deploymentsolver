@@ -1,2 +1,4 @@
 ortools
 streamlit
+opencv-python-headless
+numpy

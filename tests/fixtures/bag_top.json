@@ -1,0 +1,20 @@
+{
+  "cells": [
+    {"ingredient": "ネギ", "count": 68},
+    {"ingredient": "キノコ", "count": 44},
+    {"ingredient": "卵", "count": 65},
+    {"ingredient": "イモ", "count": 15},
+    {"ingredient": "リンゴ", "count": 4},
+    {"ingredient": "ハーブ", "count": 40},
+    {"ingredient": "肉", "count": 5},
+    {"ingredient": "牛乳", "count": 63},
+    {"ingredient": "ミツ", "count": 63},
+    {"ingredient": "オイル", "count": 1},
+    {"ingredient": "ジンジャー", "count": 3},
+    {"ingredient": "トマト", "count": 68},
+    {"ingredient": "カカオ", "count": 86},
+    {"ingredient": "大豆", "count": 49},
+    {"ingredient": "コーン", "count": 7},
+    {"ingredient": "コーヒー", "count": 72}
+  ]
+}
