@@ -80,6 +80,8 @@ class PokemonDeploymentSolver:
         [(43, 2), (44, 3), (48, 4), (49, 5), (53, 5)],
         [(48, 3), (50, 4), (55, 4), (55, 5), (58, 5)],
     ]
+    # きのみバースト: 自分のきのみ数はスキル効果量、他メンバー1体あたりは下記
+    BERRY_BURST_OTHERS = [1, 2, 2, 3, 4, 5]
     BAD_DREAMS_DRAIN = 12  # ナイトメア: 発動ごとにあくタイプ以外のげんき -12
 
     @classmethod
@@ -369,12 +371,8 @@ class PokemonDeploymentSolver:
                 self.ingredients_additionals[(ingredient, t)] = self.solver.NumVar(
                     0, self.pot_capacity * 2, f"additional_{ingredient}_{t}"
                 )
+        # きのみバーストは berry_skill_energy() で扱う
         for p in self.pokemon_data:
-            if "berry_burst" in self.pokemon_data[p]:
-                self.pokemon_data[p]["energy_charge"] = int(
-                    self.pokemon_data[p]["berry_burst"]
-                    * self.pokemon_data[p]["berries"]
-                )
             if "bad_dreams" in self.pokemon_data[p]:
                 self.pokemon_data[p]["energy_charge"] = self.pokemon_data[p][
                     "bad_dreams"
@@ -716,9 +714,11 @@ class PokemonDeploymentSolver:
         self.solver.Maximize(self.total_energy)
 
     def berry_skill_energy(self):
-        """みかづきのいのり・りゅうせいぐんで得るきのみのエナジー。
+        """きのみバースト・みかづきのいのり・りゅうせいぐんで得るきのみのエナジー。
 
-        自分のきのみ数はチーム内の同タイプの種類数で増えるため、種類数を表す
+        いずれも「1日の発動回数 × きのみ数 × きのみ1個のエナジー」で計算する。
+        きのみバーストの自分のきのみ数はスキル効果量そのもの。
+        みかづきのいのり・りゅうせいぐんの自分のきのみ数はチーム内の同タイプの種類数で増えるため、種類数を表す
         指示変数で表現する。他メンバーへのきのみは、スキル持ちが出ている日だけ
         他メンバーのきのみ分を上限とする整数変数で表現する（数は種類数1の値で近似）。
         SAT ソルバーは係数を整数に丸めて扱うため、係数は int にしておく。"""
@@ -726,18 +726,30 @@ class PokemonDeploymentSolver:
         days = range(self.today, self.days)
         for p, dp in self.pokemon_data.items():
             name = dp.get("mainskill", {}).get("name")
-            if name not in ("lunar_blessing", "draco_meteor"):
+            if name not in ("berry_burst", "lunar_blessing", "draco_meteor"):
                 continue
             level = dp.get("_skill_level")
             if level is None:
                 st.warning(f"{p}: {name} のスキルレベルを特定できないため計算に含めていません。")
+                continue
+            count = dp["_skill_count"] * self.skill_energy_multiplier
+            if name == "berry_burst":
+                my_count = self.SKILL_LEVEL_TABLES["berry_burst"][0][level - 1]
+                others_count = self.BERRY_BURST_OTHERS[level - 1]
+                for d in days:
+                    terms.append(
+                        self.pokemon_active[(p, d)]
+                        * int(count * my_count * dp["_per_berry"])
+                    )
+                    terms.append(
+                        self.others_berry_energy(p, d, count * others_count)
+                    )
                 continue
             table = (
                 self.LUNAR_BLESSING_BERRIES
                 if name == "lunar_blessing"
                 else self.DRACO_METEOR_BERRIES
             )[level - 1]
-            count = dp["_skill_count"] * self.skill_energy_multiplier
             same_type = [
                 q for q in self.pokemon_data if q != p
                 and self.pokemon_data[q]["type"] == dp["type"]
@@ -757,20 +769,24 @@ class PokemonDeploymentSolver:
                         for k, v in species.items()
                     )
                 )
-                coef = {
-                    q: int(count * table[0][1] * dq["_per_berry"])
-                    for q, dq in self.pokemon_data.items()
-                    if q != p
-                }
-                cap = sum(sorted(coef.values(), reverse=True)[:4])
-                others = self.solver.IntVar(0, cap, f"others_{p}_{d}")
-                self.solver.Add(
-                    others
-                    <= sum(c * self.pokemon_active[(q, d)] for q, c in coef.items())
-                )
-                self.solver.Add(others <= cap * self.pokemon_active[(p, d)])
-                terms.append(others)
+                terms.append(self.others_berry_energy(p, d, count * table[0][1]))
         return sum(terms)
+
+    def others_berry_energy(self, p, d, berries_per_member):
+        """スキル持ち p が d 日目に出ているとき、他メンバーが得るきのみのエナジー。
+        他メンバーのきのみ分の合計を上限とし、p が出ていない日は 0 になる整数変数。"""
+        coef = {
+            q: int(berries_per_member * dq["_per_berry"])
+            for q, dq in self.pokemon_data.items()
+            if q != p
+        }
+        cap = sum(sorted(coef.values(), reverse=True)[: self.max_active_pokemon - 1])
+        others = self.solver.IntVar(0, cap, f"others_{p}_{d}")
+        self.solver.Add(
+            others <= sum(c * self.pokemon_active[(q, d)] for q, c in coef.items())
+        )
+        self.solver.Add(others <= cap * self.pokemon_active[(p, d)])
+        return others
 
     def solve(self):
         start_time = time.time()
