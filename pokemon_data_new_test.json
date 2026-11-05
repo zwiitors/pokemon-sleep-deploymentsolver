@@ -385,14 +385,15 @@
     },
     "ミュウ": {
         "ingredients": {
-            "卵": 2
+            "卵": 2,
+            "ハーブ": 4
         },
-        "class": "berry",
+        "class": "all",
         "type": "esper",
         "base_support_time": 2900,
         "food_p": 0.200,
         "skill_p": 0.040,
-        "level": 27,
+        "level": 31,
         "subskill": [
             "スキルレベルM",
             "きのみS"
@@ -958,6 +959,51 @@
         "personality": {
             "up": "exp",
             "down": "food"
+        }
+        },
+    "ダークライ": {
+        "ingredients": {
+            "肉": 2
+        },
+        "class": "all",
+        "type": "dark",
+        "base_support_time": 2900,
+        "food_p": 0.192,
+        "skill_p": 0.023,
+        "level": 22,
+        "mainskill": {
+            "name": "bad_dreams",
+            "value": 2640
+        },
+        "subskill": [
+            "リサーチEXP"
+        ],
+        "personality": {
+            "up": "",
+            "down": ""
+        }
+    },
+    "フライゴン": {
+        "ingredients": {
+            "アボカド": 3.5
+        },
+        "class": "food",
+        "type": "earth",
+        "base_support_time": 2700,
+        "food_p": 0.172,
+        "skill_p": 0.039,
+        "level": 34,
+        "mainskill": {
+            "name": "energy_charge",
+            "value": 785
+        },
+        "subskill": [
+            "所持数S",
+            "リサーチEXP"
+        ],
+        "personality": {
+            "up": "",
+            "down": ""
         }
     }
 }
