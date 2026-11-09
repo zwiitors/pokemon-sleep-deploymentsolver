@@ -43,10 +43,24 @@ def test_reads_fixture_exactly():
     assert result.unconfirmed == ["カボチャ", "アボカド"]
 
 
+def test_reads_pumpkin():
+    """ずっしりカボチャ（リサーチノート登録後に表示される）を読み取れる。"""
+    image, expected = load_fixture("bag_pumpkin")
+    result = bag_reader.read_bag([image])
+    assert result.counts == expected
+    assert not result.unknown_cells
+    assert not result.low_confidence
+    assert not result.order_warnings
+    # 牛乳より前の肉、カカオと大豆の間のシッポは表示されていない＝0
+    assert result.zero == ["肉", "シッポ"]
+    assert result.unconfirmed == ["アボカド"]
+
+
+@pytest.mark.parametrize("fixture", ["bag_top", "bag_pumpkin"])
 @pytest.mark.parametrize("width", [720, 828, 1170, 1440])
 @pytest.mark.parametrize("quality", [50, 90])
-def test_other_resolutions_and_jpeg(width, quality):
-    image, expected = load_fixture("bag_top")
+def test_other_resolutions_and_jpeg(fixture, width, quality):
+    image, expected = load_fixture(fixture)
     result = bag_reader.read_bag([degrade(image, width, quality)])
     assert result.counts == expected
     assert not result.unknown_cells
