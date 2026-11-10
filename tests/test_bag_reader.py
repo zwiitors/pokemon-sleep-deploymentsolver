@@ -103,3 +103,54 @@ def test_unknown_icon_is_not_misidentified(tmp_path):
         assert result.unknown_cells[0].count == expected[removed]
         others = {k: v for k, v in expected.items() if k != removed}
         assert result.counts == others
+
+
+def test_reads_clipped_top_row():
+    """食材が5行になり、最上段の円の上がタブに少し隠れた画面でも読み取れる。"""
+    image, expected = load_fixture("bag_clipped")
+    result = bag_reader.read_bag([image])
+    assert result.counts == expected
+    assert not result.unknown_cells
+    assert not result.low_confidence
+    assert not result.order_warnings
+    assert result.zero == ["シッポ"]
+
+
+def hide_top(image, cut):
+    """最上段の円の上側 cut px をヘッダーで隠した画像を作る。"""
+    img = bag_reader.load_image(image)
+    top = bag_reader.find_circles(img)[0][1]
+    img = img.copy()
+    img[: top + cut] = 255
+    return img
+
+
+@pytest.mark.parametrize("fixture", ["bag_top", "bag_pumpkin"])
+@pytest.mark.parametrize("cut", [8, 30, 55, 70])
+@pytest.mark.parametrize("width,quality", [(720, 50), (1440, 90)])
+def test_clipped_top_row_variants(fixture, cut, width, quality):
+    image, expected = load_fixture(fixture)
+    result = bag_reader.read_bag([degrade(hide_top(image, cut), width, quality)])
+    assert result.counts == expected
+    assert not result.unknown_cells
+    assert not result.low_confidence
+
+
+@pytest.mark.parametrize("cut", [30, 70])
+def test_clipped_unknown_icon_is_not_misidentified(tmp_path, cut):
+    """見切れたアイコンでも、見本がなければ別の食材と誤判定せず「不明」になる。"""
+    image, expected = load_fixture("bag_top")
+    image = hide_top(image, cut)
+    for removed in ["ネギ", "キノコ", "卵", "イモ"]:
+        icon_dir = tmp_path / f"{removed}_{cut}"
+        icon_dir.mkdir()
+        for name in os.listdir(bag_reader.ICON_DIR):
+            if name.split("__")[0].removesuffix(".png") != removed:
+                (icon_dir / name).write_bytes(
+                    open(os.path.join(bag_reader.ICON_DIR, name), "rb").read()
+                )
+        templates = bag_reader.Templates(icon_dir=str(icon_dir))
+        result = bag_reader.read_bag([image], templates)
+        assert removed not in result.counts
+        assert len(result.unknown_cells) == 1, removed
+        assert result.unknown_cells[0].count == expected[removed]

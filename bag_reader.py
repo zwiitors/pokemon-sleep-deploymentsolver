@@ -25,6 +25,8 @@ CIRCLE_SIZE = 192  # 横幅1080pxでのアイコン円の直径
 ICON_SIZE = 64  # 照合用に縮小するアイコンの大きさ
 DIGIT_SIZE = (24, 32)  # 照合用に正規化する数字の大きさ (幅, 高さ)
 LIST_TOP_Y = (560, 720)  # リスト先頭行の円の上端がこの範囲なら「リストの先頭が見えている」
+FULL_HEIGHT_TOLERANCE = 4  # 円の高さがこの誤差内なら欠けていない円とみなす
+MIN_VISIBLE_HEIGHT = 120  # 上が見切れた円は、これ以上の高さが見えていれば読み取る
 
 ICON_MATCH_THRESHOLD = 0.74  # これ未満のアイコンは「不明」（正解は0.82以上、別食材は0.65以下だった）
 ICON_MATCH_MARGIN = 0.10  # 1位と2位の差がこれ未満なら「不明」
@@ -138,32 +140,65 @@ def load_image(data: bytes | str | np.ndarray) -> np.ndarray:
     return img
 
 
-def find_circles(img: np.ndarray) -> list[tuple[int, int]]:
-    """クリーム色のアイコン円を探し、欠けていない円の左上座標を返す（上→下、左→右）。"""
+def find_circles(img: np.ndarray) -> list[tuple[int, int, int]]:
+    """クリーム色のアイコン円を探し、(左上x, 左上y, 上の見切れ量) を返す（上→下、左→右）。
+
+    スクロール位置によっては最上段の円の上側がタブやヘッダーに隠れる。
+    下側（バッジ・数字）が見えていて、隠れているのが上側の一部だけなら
+    円の本来の位置を下端から逆算して採用する（左上yは負や隠れた位置になりうる）。
+    """
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, np.array([15, 15, 240]), np.array([35, 60, 255]))
     n, _, stats, _ = cv2.connectedComponentsWithStats(mask)
-    circles = []
+    found = []
     for x, y, w, h, area in stats[1:]:
-        # 円の外形がほぼ CIRCLE_SIZE 四方のものだけ採用（画面端で切れた円や卵の中身は除外）
-        if abs(w - CIRCLE_SIZE) <= 12 and abs(h - CIRCLE_SIZE) <= 12 and area > 8000:
-            # 下に続くバッジ・数字が画面内に収まっているか
-            if y + CIRCLE_SIZE + 10 <= img.shape[0]:
-                circles.append((int(x), int(y)))
-    circles.sort(key=lambda p: (round(p[1] / 50), p[0]))
-    return circles
+        # 横幅がほぼ CIRCLE_SIZE のものだけ採用（卵の中身などは除外）
+        if abs(w - CIRCLE_SIZE) > 12 or area <= 8000 * h / CIRCLE_SIZE:
+            continue
+        if abs(h - CIRCLE_SIZE) <= FULL_HEIGHT_TOLERANCE:
+            top, cut = int(y), 0
+        elif MIN_VISIBLE_HEIGHT <= h < CIRCLE_SIZE:
+            # 上が見切れた円とみなす。横幅が円の直径のままなので、見えている部分は
+            # 円の下半分より大きい（＝中心より上で切れている）
+            top = int(y + h - CIRCLE_SIZE)
+            cut = CIRCLE_SIZE - int(h)
+        else:
+            continue
+        # 下に続くバッジ・数字が画面内に収まっているか
+        if top + CIRCLE_SIZE + 10 <= img.shape[0]:
+            found.append((int(x), top, cut))
+    if found:
+        # 見切れた円として扱ってよいのは最上段だけ（途中の段で欠けるのは別の何か）
+        first_row = min(t for _, t, _ in found)
+        found = [c for c in found if c[2] == 0 or abs(c[1] - first_row) <= 25]
+    found.sort(key=lambda p: (round(p[1] / 50), p[0]))
+    return found
 
 
-def icon_crop(img: np.ndarray, x: int, y: int) -> np.ndarray:
-    return img[y : y + CIRCLE_SIZE, x : x + CIRCLE_SIZE]
+def padded_crop(img: np.ndarray, x: int, y: int, w: int, h: int) -> np.ndarray:
+    """画像外（上側）にはみ出す部分を白で埋めて切り出す。"""
+    out = np.full((h, w, 3), 255, np.uint8)
+    y0, y1 = max(0, y), min(img.shape[0], y + h)
+    x0, x1 = max(0, x), min(img.shape[1], x + w)
+    if y1 > y0 and x1 > x0:
+        out[y0 - y : y1 - y, x0 - x : x1 - x] = img[y0:y1, x0:x1]
+    return out
 
 
-def icon_feature(crop: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """照合用のアイコン特徴（縮小画像, 前景マスク）。
+def icon_crop(img: np.ndarray, x: int, y: int, cut: int = 0) -> np.ndarray:
+    crop = padded_crop(img, x, y, CIRCLE_SIZE, CIRCLE_SIZE)
+    if cut:
+        crop[:cut] = 255  # 隠れている部分（ヘッダー等）は白で塗りつぶす
+    return crop
+
+
+def icon_feature(crop: np.ndarray, cut: int = 0) -> tuple[np.ndarray, np.ndarray, int]:
+    """照合用のアイコン特徴（縮小画像, 前景マスク, 比較に使える最初の行）。
 
     クリーム色・白の背景はどのアイコンでも同じで識別の邪魔になるため、
     前景（食材の絵）の部分だけを比べられるようにマスクを作る。
     バッジが重なる右下部分は比較から除く。
+    cut: 上側の見切れ量（元の解像度）。返り値の3つ目は、縮小後に比較に使える最初の行。
     """
     small = cv2.resize(crop, (ICON_SIZE, ICON_SIZE), interpolation=cv2.INTER_AREA)
     # 背景判定は元の解像度で行い、絵の輪郭の内側を塗りつぶしてシルエットにする
@@ -172,19 +207,33 @@ def icon_feature(crop: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     background = (hsv[..., 1] < 70) & (hsv[..., 2] > 225)
     fg = (~background).astype(np.uint8) * 255
     fg = cv2.morphologyEx(fg, cv2.MORPH_CLOSE, np.ones((5, 5), np.uint8))
+    if cut:
+        # 見切れた境目に線を引き、上が切れて開いた輪郭（卵など）を閉じて塗りつぶせるようにする
+        fg[:cut] = 0
+        fg[cut : cut + 2] = 255
     contours, _ = cv2.findContours(fg, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     contours = [c for c in contours if cv2.contourArea(c) > 150]  # 細かなノイズを除く
     filled = np.zeros_like(fg)
     cv2.drawContours(filled, contours, -1, 255, cv2.FILLED)
     mask = cv2.resize(filled, (ICON_SIZE, ICON_SIZE), interpolation=cv2.INTER_AREA) > 127
-    cut = int(ICON_SIZE * 0.72)
-    mask[cut:, int(ICON_SIZE * 0.45) :] = False
-    return small.astype(np.float32), mask
+    badge_row = int(ICON_SIZE * 0.72)
+    mask[badge_row:, int(ICON_SIZE * 0.45) :] = False
+    valid_from = int(np.ceil(cut * ICON_SIZE / CIRCLE_SIZE))
+    mask[:valid_from] = False
+    return small.astype(np.float32), mask, valid_from
 
 
-def icon_score(a: tuple[np.ndarray, np.ndarray], b: tuple[np.ndarray, np.ndarray]) -> float:
-    """前景マスクの和集合の範囲で正規化相互相関をとる。形の重なり具合も掛け合わせる。"""
-    (ia, ma), (ib, mb) = a, b
+def icon_score(a: tuple, b: tuple) -> float:
+    """前景マスクの和集合の範囲で正規化相互相関をとる。形の重なり具合も掛け合わせる。
+
+    どちらかの上側が見切れている場合は、両方とも見えている行だけで比べる。
+    """
+    (ia, ma, va), (ib, mb, vb) = a, b
+    valid_from = max(va, vb)
+    if valid_from:
+        ma, mb = ma.copy(), mb.copy()
+        ma[:valid_from] = False
+        mb[:valid_from] = False
     union = ma | mb
     if not union.any():
         return 0.0
@@ -261,8 +310,28 @@ def _ncc(a: np.ndarray, b: np.ndarray) -> float:
 
 class Templates:
     def __init__(self, icon_dir: str = ICON_DIR, digit_dir: str = DIGIT_DIR):
-        self.icons = self._load_dir(icon_dir, cv2.IMREAD_COLOR, icon_feature)
+        self.icon_images = self._load_dir(icon_dir, cv2.IMREAD_COLOR, lambda img: img)
+        self.icons = {
+            label: [icon_feature(img) for img in imgs] for label, imgs in self.icon_images.items()
+        }
         self.digits = self._load_dir(digit_dir, cv2.IMREAD_GRAYSCALE, glyph_feature)
+        self._clipped: dict[int, dict] = {}
+
+    def icon_features(self, cut: int = 0) -> dict:
+        """上が cut px 見切れたときの見本の特徴。読み取る画像と同じ条件で見本も隠して作る。"""
+        if not cut:
+            return self.icons
+        if cut not in self._clipped:
+            clipped = {}
+            for label, imgs in self.icon_images.items():
+                feats = []
+                for img in imgs:
+                    img = cv2.resize(img, (CIRCLE_SIZE, CIRCLE_SIZE)).copy()
+                    img[:cut] = 255
+                    feats.append(icon_feature(img, cut))
+                clipped[label] = feats
+            self._clipped[cut] = clipped
+        return self._clipped[cut]
 
     @staticmethod
     def _load_dir(path, flag, feature):
@@ -279,10 +348,13 @@ class Templates:
             result.setdefault(label, []).append(feature(img))
         return result
 
-    def match_icon(self, crop: np.ndarray) -> tuple[str | None, float]:
-        feat = icon_feature(crop)
+    def match_icon(self, crop: np.ndarray, cut: int = 0) -> tuple[str | None, float]:
+        feat = icon_feature(crop, cut)
         scores = sorted(
-            ((max(icon_score(feat, f) for f in feats), label) for label, feats in self.icons.items()),
+            (
+                (max(icon_score(feat, f) for f in feats), label)
+                for label, feats in self.icon_features(cut).items()
+            ),
             reverse=True,
         )
         if not scores:
@@ -332,9 +404,9 @@ def read_screen(image, templates: Templates | None = None) -> ScreenResult:
     img = load_image(image)
     circles = find_circles(img)
     cells = []
-    for x, y in circles:
-        crop = icon_crop(img, x, y)
-        ingredient, icon_score = templates.match_icon(crop)
+    for x, y, cut in circles:
+        crop = icon_crop(img, x, y, cut)
+        ingredient, icon_score = templates.match_icon(crop, cut)
         count, digit_score = templates.read_count(badge_crop(img, x, y))
         cells.append(
             Cell(
@@ -343,7 +415,7 @@ def read_screen(image, templates: Templates | None = None) -> ScreenResult:
                 icon_score=icon_score,
                 digit_score=digit_score,
                 icon_image=cv2.cvtColor(
-                    img[y : y + CIRCLE_SIZE + 10, x : x + CIRCLE_SIZE + 40],
+                    padded_crop(img, x, y, CIRCLE_SIZE + 40, CIRCLE_SIZE + 10),
                     cv2.COLOR_BGR2RGB,
                 ),
                 position=(x, y),
@@ -450,8 +522,8 @@ def make_templates(image_path: str, labels: list[dict], icon_dir=ICON_DIR, digit
     existing_icons = {
         os.path.splitext(f)[0].split("__")[0] for f in os.listdir(icon_dir)
     }
-    for (x, y), label in zip(circles, labels):
-        if label["ingredient"] not in existing_icons:
+    for (x, y, cut), label in zip(circles, labels):
+        if label["ingredient"] not in existing_icons and cut == 0:  # 見本は欠けていない円から作る
             save(icon_dir, label["ingredient"], icon_crop(img, x, y))
             existing_icons.add(label["ingredient"])
             saved_icons.append(label["ingredient"])
